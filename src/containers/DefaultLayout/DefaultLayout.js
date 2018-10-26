@@ -24,47 +24,6 @@ class DefaultLayout extends Component {
           <DefaultFooter />
         </AppFooter>
       </div>
-
-
-
-
-
-
-      // <div className="app">
-      //   <AppHeader fixed>
-      //     <DefaultHeader />
-      //   </AppHeader>
-      //   <div className="app-body">
-      //     <AppSidebar fixed display="lg">
-      //       <AppSidebarHeader />
-      //       <AppSidebarForm />
-      //       <AppSidebarNav navConfig={navigation} {...this.props} />
-      //       <AppSidebarFooter />
-      //       <AppSidebarMinimizer />
-      //     </AppSidebar>
-      //     <main className="main">
-      //       <AppBreadcrumb appRoutes={routes}/>
-      //       <Container fluid>
-      //         <Switch>
-      //           {routes.map((route, idx) => {
-      //               return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
-      //                   <route.component {...props} />
-      //                 )} />)
-      //                 : (null);
-      //             },
-      //           )}
-      //           <Redirect from="/" to="/dashboard" />
-      //         </Switch>
-      //       </Container>
-      //     </main>
-      //     <AppAside fixed>
-      //       <DefaultAside />
-      //     </AppAside>
-      //   </div>
-      //   <AppFooter>
-      //     <DefaultFooter />
-      //   </AppFooter>
-      // </div>
     );
   }
 }

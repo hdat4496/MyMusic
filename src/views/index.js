@@ -22,13 +22,10 @@ import Dashboard from './Dashboard';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Alerts, Badges, Modals } from './Notifications';
 import { Login, Page404, Page500, Register, PageMain } from './Pages';
-import { Colors, Typography } from './Theme';
 import Widgets from './Widgets';
 
 export {
   Badges,
-  Typography,
-  Colors,
   CoreUIIcons,
   Page404,
   PageMain,
