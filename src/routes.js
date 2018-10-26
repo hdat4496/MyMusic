@@ -7,6 +7,10 @@ function Loading() {
   return <div>Loading...</div>;
 }
 
+const Layout2 = Loadable({
+  loader: () => import('./views/Layout2'),
+  loading: Loading,
+});
 
 const Cards = Loadable({
   loader: () => import('./views/Base/Cards'),
@@ -169,7 +173,8 @@ const User = Loadable({
 
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/sing', name: 'Sing', component: Dashboard },
+  { path: '/layout2', name: 'layout2', component: Layout2 },
   { path: '/base', exact: true, name: 'Base', component: Cards },
   { path: '/base/cards', name: 'Cards', component: Cards },
   { path: '/base/forms', name: 'Forms', component: Forms },

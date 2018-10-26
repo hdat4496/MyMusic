@@ -19,12 +19,14 @@ import {
 import { ButtonDropdowns, ButtonGroups, Buttons, BrandButtons } from './Buttons';
 import Charts from './Charts';
 import Dashboard from './Dashboard';
+import Layout2 from './Layout2';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Alerts, Badges, Modals } from './Notifications';
 import { Login, Page404, Page500, Register, PageMain } from './Pages';
 import Widgets from './Widgets';
 
 export {
+  Layout2,
   Badges,
   CoreUIIcons,
   Page404,
