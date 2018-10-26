@@ -1,0 +1,6 @@
+{
+  "name": "PageMain",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PageMain.js"
+}
