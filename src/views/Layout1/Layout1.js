@@ -104,7 +104,7 @@ class Dashboard extends Component {
         </Row>
 
         <Row>
-          <Col xs="8" sm="8" style={{ margin: '20px auto', display: 'flex' }}>.
+          <Col xs="8" sm="8" style={{ margin: '20px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
                 <audio controls>
@@ -126,7 +126,7 @@ class Dashboard extends Component {
         </Row>
 
         <Row>
-          <Col xs="8" sm="8" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="8" sm="8" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardHeader>
                 Lyrics
@@ -177,7 +177,7 @@ class Dashboard extends Component {
         </Row>
 
         <Row>
-          <Col xs="8" sm="8" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="8" sm="8" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardHeader>
                 Lyrics

@@ -17,6 +17,11 @@ const Layout2 = Loadable({
   loading: Loading,
 });
 
+const Layout3 = Loadable({
+  loader: () => import('./views/Layout3'),
+  loading: Loading,
+});
+
 const Cards = Loadable({
   loader: () => import('./views/Base/Cards'),
   loading: Loading,
@@ -180,6 +185,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/layout1', name: 'layout1', component: Layout1 },
   { path: '/layout2', name: 'layout2', component: Layout2 },
+  { path: '/layout3', name: 'layout3', component: Layout3 },
   { path: '/base', exact: true, name: 'Base', component: Cards },
   { path: '/base/cards', name: 'Cards', component: Cards },
   { path: '/base/forms', name: 'Forms', component: Forms },

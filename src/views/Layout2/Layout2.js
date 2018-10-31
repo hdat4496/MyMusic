@@ -208,7 +208,7 @@ class Layout2 extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
                 <div className="chart-wrapper">
@@ -276,7 +276,7 @@ class Layout2 extends Component {
         </Row>
 
         <Row>
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
                 <Row>
@@ -295,7 +295,7 @@ class Layout2 extends Component {
             </Card>
           </Col>
 
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
               <div className="chart-wrapper">
@@ -304,7 +304,7 @@ class Layout2 extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
               <div className="chart-wrapper">
@@ -317,7 +317,7 @@ class Layout2 extends Component {
 
 
         <Row>
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
               <div className="chart-wrapper">
@@ -327,7 +327,7 @@ class Layout2 extends Component {
             </Card>
           </Col>
 
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
               <div className="chart-wrapper">
@@ -336,7 +336,7 @@ class Layout2 extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>.
+          <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
               <CardBody>
               <div className="chart-wrapper">

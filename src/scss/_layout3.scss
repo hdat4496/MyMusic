@@ -1,0 +1,32 @@
+.list-audio{
+    margin: 10px auto;
+    display: flex;
+    .audio-item{
+        border-radius: 50px 50px 0 0;
+        margin: 10px auto;
+        display: flex;
+        .card{
+            border-radius: 50px;   
+        }
+        .audio-item-header{
+            border-radius: 50px 50px 0 0;
+            padding: 0;
+            img{
+                border-radius: 50px 50px 0 0;
+            }
+        }
+        .audio-item-body{
+            padding: 10px;
+            .audio-item-body-avatar{
+                margin: 0;
+
+            }
+            .audio-item-body-info{
+                margin: 0;
+                font-size: 18px;
+                padding-top: 5px
+            }
+
+        }
+    }
+}

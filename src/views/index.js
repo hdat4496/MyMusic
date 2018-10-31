@@ -21,13 +21,16 @@ import Charts from './Charts';
 import Dashboard from './Dashboard';
 import Layout1 from './Layout1';
 import Layout2 from './Layout2';
+import Layout3 from './Layout3';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Alerts, Badges, Modals } from './Notifications';
 import { Login, Page404, Page500, Register, PageMain } from './Pages';
 import Widgets from './Widgets';
 
 export {
+  Layout1,
   Layout2,
+  Layout3,
   Badges,
   CoreUIIcons,
   Page404,
