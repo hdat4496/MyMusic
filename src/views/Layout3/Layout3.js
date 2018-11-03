@@ -121,28 +121,22 @@ class Layout3 extends Component {
               <CardBody>
                 <Row>
                   <Col xs="6" sm="6" style={{ display: 'flex' }}>
-                    <Jumbotron>
-                      <h1 className="display-3">Hello, world!</h1>
-                      <p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra
-                    attention to featured content or information.</p>
-                      <hr className="my-2" />
-                      <p>It uses utility classes for typgraphy and spacing to space content out within the larger container.</p>
-                      <p className="lead">
-                        <Button color="primary">Learn More</Button>
-                      </p>
+                    <Jumbotron style={{ marginBottom: '0px', paddingTop: '50px', paddingBottom: "50px"}}>
+                      <h1 style={{ fontSize: '70px'}}>Music trend</h1>
+                      <h1 >in your hand</h1>
+                      <p className="lead">Present many music feature of hit songs and predict if a song will be a hit vernus. That's so awesome!</p>
+                      <Row  style={{ marginTop: '30px auto'}}>
+                        <Col xs="5" sm="3">
+                          <Button block color="primary" className="btn-pill">Let's start</Button>
+                        </Col>
+                        <Col xs="5" sm="3">
+                          <Button block outline color="primary" className="btn-pill"> Sign in</Button>
+                        </Col>
+                      </Row>
                     </Jumbotron>
                   </Col>
                   <Col xs="6" sm="6" style={{ display: 'flex' }}>
-                    <Jumbotron>
-                      <h1 className="display-3">Hello, world!</h1>
-                      <p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra
-                    attention to featured content or information.</p>
-                      <hr className="my-2" />
-                      <p>It uses utility classes for typgraphy and spacing to space content out within the larger container.</p>
-                      <p className="lead">
-                        <Button color="primary">Learn More</Button>
-                      </p>
-                    </Jumbotron>
+                    
                   </Col>
                 </Row>
               </CardBody>
@@ -368,12 +362,12 @@ class Layout3 extends Component {
 
                 <Col xs="12" xl="12">
 
-                      <Carousel activeIndex={activeIndex} next={this.next} previous={this.previous}>
-                        <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
-                        {slides2}
-                        <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-                        <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-                      </Carousel>
+                  <Carousel activeIndex={activeIndex} next={this.next} previous={this.previous}>
+                    <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+                    {slides2}
+                    <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
+                    <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
+                  </Carousel>
 
                 </Col>
 
