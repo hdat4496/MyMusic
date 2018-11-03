@@ -7,6 +7,7 @@ import logo from '../../assets/img/brand/logo.svg'
 import musiclogo from '../../assets/img/brand/music_logo.jpg'
 import avatar from '../../assets/img/brand/avatar.jpg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
+import logoicon from '../../assets/img/brand/logo_icon.png'
 
 const propTypes = {
   children: PropTypes.node,
@@ -23,7 +24,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppNavbarBrand
-          full={{ src: musiclogo, width: 89, height: 25, alt: 'Music Logo' }}
+          full={{ src: logoicon, width: 50, height: 40, alt: 'Music Logo' }}
           minimized={{ src: sygnet, width: 30, height: 30, alt: 'Music Logo' }}
         />
         <InputGroup style={{margin:  'auto', width:'40%'}}>
