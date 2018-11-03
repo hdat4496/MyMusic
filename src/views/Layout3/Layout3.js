@@ -176,22 +176,22 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/nayemoi.jpg' alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/everytime.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/tung.jpg' className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/a1.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>Này em ơi</b>
+                                <b>EveryTime</b>
                               </span>
                               <br />
                               <span>
-                                Tùng
-                            </span>
+                                A1
+                            </span> 
                             </div>
                           </Col>
                         </Row>
@@ -226,21 +226,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/hongkong1.jpg' alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/untilyou.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/nguyentrongtai.jpg' className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/shayneward.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>Hongkong1</b>
+                                <b>Until you</b>
                               </span>
                               <br />
                               <span>
-                                Nguyễn Trọng Tài
+                                Shayne Ward
                             </span>
                             </div>
                           </Col>
@@ -253,21 +253,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/tancungnoinho.jpg' alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/everyiloveyou.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/will.jpg' className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/boyzone.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>Tận cùng nỗi nhớ</b>
+                                <b>Every i love you</b>
                               </span>
                               <br />
                               <span>
-                                Will
+                                Boyzone
                             </span>
                             </div>
                           </Col>
@@ -278,21 +278,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/buonkhongem.jpg' alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/hungup.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/datg.jpg' className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/madonna.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>Buồn không em</b>
+                                <b>Hung Up</b>
                               </span>
                               <br />
                               <span>
-                                  Đat G
+                                  Madonna
                             </span>
                             </div>
                           </Col>
@@ -303,21 +303,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/tamma.jpg' alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/hotelcalifornia.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/blackbivodinhhieu.jpg' className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/eagels.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>Tâm ma</b>
+                                <b>Hotel California</b>
                               </span>
                               <br />
                               <span>
-                                Blackbi ft Võ Đình Hiếu
+                                Eagles
                             </span>
                             </div>
                           </Col>
@@ -328,21 +328,22 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/phiasauem.jpg' alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/youarenotalone.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/kaytran.jpg' className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/michaeljackson.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>Phía Sau Em</b>
+                                <b>You are not alone</b>
                               </span>
                               <br />
                               <span>
-                                Kay Trần
+                                
+                              Michael Jackson
                             </span>
                             </div>
                           </Col>
