@@ -17,7 +17,7 @@ import {
   Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
 } from 'reactstrap';
 import avatar from '../../assets/img/brand/avatar.jpg'
-import musicimg from '../../assets/img/brand/music.jpg';
+
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 
@@ -157,21 +157,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/beatifulinwhite.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/westlife.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Beatiful in white.</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                West life
                             </span>
                             </div>
                           </Col>
@@ -182,21 +182,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/nayemoi.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/tung.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Này em ơi</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                Tùng
                             </span>
                             </div>
                           </Col>
@@ -207,21 +207,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/attention.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/charlieputh.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Attention</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                              Charlie puth
                             </span>
                             </div>
                           </Col>
@@ -232,21 +232,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/hongkong1.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/nguyentrongtai.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Hongkong1</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                Nguyễn Trọng Tài
                             </span>
                             </div>
                           </Col>
@@ -259,21 +259,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/tancungnoinho.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/will.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Tận cùng nỗi nhớ</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                Will
                             </span>
                             </div>
                           </Col>
@@ -284,21 +284,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/buonkhongem.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/datg.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Buồn không em</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                  Đat G
                             </span>
                             </div>
                           </Col>
@@ -309,21 +309,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/tamma.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/blackbivodinhhieu.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Tâm ma</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                Blackbi ft Võ Đình Hiếu
                             </span>
                             </div>
                           </Col>
@@ -334,21 +334,21 @@ class Layout3 extends Component {
                   <Col xs="3" sm="3" className='audio-item'>
                     <Card style={{ width: '100%' }}>
                       <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+                        <img style={{ width: '100%' }} src='/assets/img/song/phiasauem.jpg' alt="Music" />
                       </CardHeader>
                       <CardBody className='audio-item-body'>
                         <Row>
                           <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src={avatar} className="img-avatar" alt="avatar" />
+                            <img src='/assets/img/singer/kaytran.jpg' className="img-avatar" alt="avatar" />
                           </Col>
                           <Col xs="9" sm="9" className='audio-item-body-info' >
                             <div>
                               <span>
-                                <b>We don't talk anymore.</b>
+                                <b>Phía Sau Em</b>
                               </span>
                               <br />
                               <span>
-                                Trịnh Thăng Bình
+                                Kay Trần
                             </span>
                             </div>
                           </Col>

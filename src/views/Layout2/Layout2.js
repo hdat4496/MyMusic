@@ -278,14 +278,14 @@ class Layout2 extends Component {
         <Row>
           <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
           <Card style={{ width: '100%' }}>
-              <CardBody>
-                <Row>
-                  <Col  xs="6" sm="6">
+              <CardBody style={{height: '100%'}}>
+                <Row style={{height: '100%'}}>
+                  <Col  style={{margin:'auto'}}  xs="6" sm="6">
                     <div className="chart-wrapper">
                       <Doughnut data={doughnut} />
                     </div>
                   </Col>
-                  <Col  xs="6" sm="6">
+                  <Col   style={{margin:'auto'}} xs="6" sm="6">
                     <div className="chart-wrapper">
                       <Doughnut data={doughnut} />
                     </div>
