@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
-import { Pie, Line, Doughnut } from 'react-chartjs-2';
 import {
-  Badge,
   Button,
-  ButtonGroup,
-  ButtonToolbar,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
-  CardTitle,
   Col,
-  Progress,
   Row,
   Jumbotron,
   Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
 } from 'reactstrap';
-import avatar from '../../assets/img/brand/avatar.jpg'
-
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 
 
@@ -90,7 +80,6 @@ class Layout3 extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { activeIndex } = this.state;
 
     const slides = items.map((item) => {

@@ -16,7 +16,7 @@ class PageMain extends Component {
                 : (null);
             },
           )}
-          <Redirect from="/" to="/dashboard" />
+          <Redirect from="/" to="/layout1" />
         </Switch>
       </Container>
     </main>

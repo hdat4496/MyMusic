@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import { Pie, Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import {
-  Badge,
   Button,
   ButtonGroup,
   ButtonToolbar,
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
   CardTitle,
   Col,
   Progress,
   Row,
 
 } from 'reactstrap';
-import musicimg from '../../assets/img/brand/music.jpg';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Pie, Line } from 'react-chartjs-2';
-import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
+import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Col, Row } from 'reactstrap';
 import musicimg from '../../assets/img/brand/music.jpg';
 import Widget03 from '../../views/Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
@@ -90,7 +90,7 @@ const pie = {
     }],
 };
 
-class Dashboard extends Component {
+class Layout1 extends Component {
   render() {
 
 
@@ -240,4 +240,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default Layout1;
