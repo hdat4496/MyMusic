@@ -174,36 +174,33 @@ class Dashboard extends Component {
 
           <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
+              <CardHeader>
+                Music features
+              </CardHeader>
               <CardBody style={{ height: '100%' }}>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Speechiness</div>
                       <Progress value='50'> 50%</Progress>
                       <br/>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Acousticness</div>
                       <Progress value="25">25% </Progress>
                       <br/>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Instrumentalness</div>
                       <Progress value={50}>50% </Progress>
                       <br/>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Valence</div>
                       <Progress value={75}>75% </Progress>
                       <br/>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Liveness</div>
                       <Progress value="100">100% </Progress>
                       <br/>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Energy</div>
                       <Progress value='10'> 10%</Progress>
                       <br/>
-                      <div className="text-center">Label</div>
+                      <div className="text-center">Danceability</div>
                       <Progress value="25">25% </Progress>
                       <br/>
-                      <div className="text-center">Label</div>
-                      <Progress value={50}>50% </Progress>
-                      <br/>
-                      <div className="text-center">Label</div>
-                      <Progress value={75}>75% </Progress> 
-                      <br/>
-                      <div className="text-center">Label</div>
-                      <Progress value="100">100% </Progress>     
+                      <div className="text-center">Mode</div>
+                      <Progress value={50}>50% </Progress>     
               </CardBody>
             </Card>
           </Col>
