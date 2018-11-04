@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Pie, Line } from 'react-chartjs-2';
-import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Col, Row } from 'reactstrap';
-import musicimg from '../../assets/img/brand/music.jpg';
+import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
+import musicimg from '../../assets/img/brand/music.jpg'
+import artistimg from '../../assets/img/brand/avatar.jpg'
 import Widget03 from '../../views/Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
@@ -62,34 +63,31 @@ const socialChartOpts = {
 };
 
 
-
-
-
-
-
-
 const pie = {
   labels: [
-    'Red',
-    'Green',
-    'Yellow',
+    'Non-Hit',
+    'Hit',
   ],
   datasets: [
     {
-      data: [300, 50, 100],
+      data: [40, 60],
       backgroundColor: [
         '#FF6384',
         '#36A2EB',
-        '#FFCE56',
       ],
       hoverBackgroundColor: [
         '#FF6384',
         '#36A2EB',
-        '#FFCE56',
       ],
     }],
 };
-
+const options = {
+  tooltips: {
+    enabled: false,
+    custom: CustomTooltips
+  },
+  maintainAspectRatio: false
+}
 class Layout1 extends Component {
   render() {
 
@@ -97,9 +95,19 @@ class Layout1 extends Component {
 
     return (
       <div className="animated fadeIn">
-        <Row style={{ margin: '20px 0', display: 'flex' }}>
-          <Col xs="12" sm="12" style={{ display: 'flex' }}>
-            <img style={{ width: '100%' }} src={musicimg} alt="Music" />
+        <Row >
+          <Col xs="12" sm="12" >
+            <div style={{ position: 'relative', display: 'block' }}>
+              <img className='img-thumbnail img-avatar' src={artistimg} alt="admin@bootstrapmaster.com"
+                style={{ width: '200px', height: '200px', position: 'absolute', bottom: '-10%', left: '10%' }} />
+              <img style={{ width: '100%', height: '270px' }} src={musicimg} alt="Music" />
+            </div>
+            <CardHeader style={{ height: '40px' }}>
+              <i className="fa fa-twitter fa-lg float-right "></i>
+              <i className="fa fa-instagram fa-lg float-right"></i>
+              <i className="fa fa-facebook fa-lg float-right"></i>
+            </CardHeader>
+
           </Col>
         </Row>
 
@@ -108,14 +116,21 @@ class Layout1 extends Component {
             <Card style={{ width: '100%' }}>
               <CardBody style={{ height: '100%' }}>
                 <Row style={{ height: '100%' }}>
-                  <Col xs="3" sm="3" style={{ display: 'flex', height:'100%' }}>
-                    <img className="img-avatar" style={{ height:'100%', width:'100%' }} src='/assets/img/song/beatifulinwhite.jpg' alt="Music" />
+                  <Col xs="3" sm="3" style={{ height: '70%' }}>
+                    <img className="img-thumbnail" style={{ height: '100%', width: '100%' }} src='/assets/img/song/beatifulinwhite.jpg' alt="Music" />
                   </Col>
-                  <Col xs="9" sm="9" style={{ margin: '10px auto', display: 'flex' }}>
-                    <audio controls>
-                      <source src="assets/audio/Beautiful-In-White-Westlife.mp3" type="audio/ogg" />
-                    </audio>
+                  <Col xs="8" sm="8" style={{ margin: '10px auto' }}>
+                    <p style={{ fontSize: '50px' }}>Beautiful in white</p>
+                    <p style={{ fontSize: '35px' }}>Westlife</p>
                   </Col>
+                  <Col xs="1" sm="1" >
+                    <i className="icon-playlist icons font-2xl"></i>
+                    <i className="icon-cloud-download icons font-2xl" ></i>
+                    <i className="icon-heart icons font-2xl"></i>
+                  </Col>
+                  <audio controls style={{ width: '100%' }}>
+                    <source src="assets/audio/Beautiful-In-White-Westlife.mp3" type="audio/ogg" />
+                  </audio>
                 </Row>
               </CardBody>
             </Card>
@@ -123,9 +138,17 @@ class Layout1 extends Component {
 
           <Col xs="4" sm="4" style={{ margin: '20px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
+              <CardHeader>
+                It's a hit song or not?
+              <div className="card-header-actions">
+                  <a href="http://www.chartjs.org" className="card-header-action">
+                    <small className="text-muted">docs</small>
+                  </a>
+                </div>
+              </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
-                  <Pie data={pie} />
+                  <Pie data={pie} options={options} />
                 </div>
               </CardBody>
             </Card>
@@ -149,33 +172,33 @@ class Layout1 extends Component {
 
           <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
+              <CardHeader>
+                Music features
+              </CardHeader>
               <CardBody style={{ height: '100%' }}>
-                <Widget03 dataBox={() => ({ variant: 'facebook', friends: '89k', feeds: '459' })} >
-                  <div className="chart-wrapper">
-                    <Line data={makeSocialBoxData(0)} options={socialChartOpts} height={90} />
-                  </div>
-                </Widget03>
-
-                <div className="brand-card">
-                  <div className="brand-card-header bg-twitter">
-                    <i className="fa fa-twitter"></i>
-                    <div className="chart-wrapper">
-                      <Line data={makeSocialBoxData(1)} options={socialChartOpts} height={90} />
-                    </div>
-                  </div>
-                  <div className="brand-card-body">
-                    <div>
-                      <div className="text-value">973k</div>
-                      <div className="text-uppercase text-muted small">followers</div>
-                    </div>
-                    <div>
-                      <div className="text-value">1.792</div>
-                      <div className="text-uppercase text-muted small">tweets</div>
-                    </div>
-                  </div>
-                </div>
-
-
+                      <div className="text-center">Speechiness</div>
+                      <Progress value='50'> 50%</Progress>
+                      <br/>
+                      <div className="text-center">Acousticness</div>
+                      <Progress value="25">25% </Progress>
+                      <br/>
+                      <div className="text-center">Instrumentalness</div>
+                      <Progress value={50}>50% </Progress>
+                      <br/>
+                      <div className="text-center">Valence</div>
+                      <Progress value={75}>75% </Progress>
+                      <br/>
+                      <div className="text-center">Liveness</div>
+                      <Progress value="100">100% </Progress>
+                      <br/>
+                      <div className="text-center">Energy</div>
+                      <Progress value='10'> 10%</Progress>
+                      <br/>
+                      <div className="text-center">Danceability</div>
+                      <Progress value="25">25% </Progress>
+                      <br/>
+                      <div className="text-center">Mode</div>
+                      <Progress value={50}>50% </Progress>     
               </CardBody>
             </Card>
           </Col>
@@ -185,55 +208,70 @@ class Layout1 extends Component {
           <Col xs="8" sm="8" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardHeader>
-                Lyrics
+                Recommend songs
               </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem className="justify-content-between"><span>Cras justo odio</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>Cras justo odio</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>Cras justo odio</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between">
+                  <span>Love me like you do</span>
+                  <i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i>
+                  </ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Look what you made me do</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Girls like you</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>One more night</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>..Ready for it?</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Way back home</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
                 </ListGroup>
               </CardBody>
             </Card>
           </Col>
-
           <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardBody style={{ height: '100%' }}>
-                <Row>
-                  <Col style={{ width: '50%' }}>
-                    <div>
-                      <div className="text-center">Label</div>
-                      <Progress> 0%</Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value="25">25% </Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value={50}>50% </Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value={75}>75% </Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value="100">100% </Progress>
+              <div className="brand-card">
+                  <div className="brand-card-header bg-twitter">
+                    <i className="icon-music-tone-alt icons font-2xl"></i>
+                    <div className="chart-wrapper">
+                      <Line data={makeSocialBoxData(0)} options={socialChartOpts} height={90} />
                     </div>
-                  </Col>
+                  </div>
+                  <div className="brand-card-body">
+                    <div>
+                      <div className="text-value">4 beat</div>
+                      <div className="text-uppercase text-muted small">Time signature</div>
+                    </div>
+                    <div>
+                      <div className="text-value">C#</div>
+                      <div className="text-uppercase text-muted small">Key</div>
+                    </div>
+                  </div>
+                </div>
 
-                  <Col style={{ width: '50%' }}>
-                    <div>
-                      <div className="text-center">Label</div>
-                      <Progress> 0%</Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value="25">25% </Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value={50}>50% </Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value={75}>75% </Progress>
-                      <div className="text-center">Label</div>
-                      <Progress value="100">100% </Progress>
+                <div className="brand-card">
+                  <div className="brand-card-header bg-twitter">
+                    <i className="icon-equalizer icons font-2xl"></i>
+                    <div className="chart-wrapper">
+                      <Line data={makeSocialBoxData(1)} options={socialChartOpts} height={90} />
                     </div>
-                  </Col>
-                </Row>
+                  </div>
+                  <div className="brand-card-body">
+                    <div>
+                      <div className="text-value">1.023</div>
+                      <div className="text-uppercase text-muted small">Loundness</div>
+                    </div>
+                    <div>
+                      <div className="text-value">113</div>
+                      <div className="text-uppercase text-muted small">Tempo</div>
+                    </div>
+                  </div>
+                </div>
+
+
               </CardBody>
             </Card>
           </Col>
+
+
         </Row>
       </div>
     );

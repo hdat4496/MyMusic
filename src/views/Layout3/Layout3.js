@@ -32,6 +32,40 @@ const items = [
   },
 ];
 
+const line = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+    {
+      label: 'Tempo',
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: 'rgba(75,192,192,0.4)',
+      borderColor: 'rgba(75,192,192,1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'rgba(75,192,192,1)',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      pointHoverBorderColor: 'rgba(220,220,220,1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: [65, 59, 80, 81, 56, 55, 40],
+    },
+  ],
+};
+const options = {
+  tooltips: {
+    enabled: false,
+    custom: CustomTooltips
+  },
+  maintainAspectRatio: false
+}
+
 
 
 
@@ -110,11 +144,11 @@ class Layout3 extends Component {
               <CardBody>
                 <Row>
                   <Col xs="6" sm="6" style={{ display: 'flex' }}>
-                    <Jumbotron style={{ marginBottom: '0px', paddingTop: '50px', paddingBottom: "50px"}}>
-                      <h1 style={{ fontSize: '70px'}}>Music trend</h1>
+                    <Jumbotron style={{ marginBottom: '0px', paddingTop: '50px', paddingBottom: "50px" }}>
+                      <h1 style={{ fontSize: '70px' }}>Music trend</h1>
                       <h1 >in your hand</h1>
                       <p className="lead">Present many music feature of hit songs and predict if a song will be a hit vernus. That's so awesome!</p>
-                      <Row  style={{ marginTop: '30px auto'}}>
+                      <Row style={{ marginTop: '30px auto' }}>
                         <Col xs="5" sm="3">
                           <Button block color="primary" className="btn-pill">Let's start</Button>
                         </Col>
@@ -125,7 +159,13 @@ class Layout3 extends Component {
                     </Jumbotron>
                   </Col>
                   <Col xs="6" sm="6" style={{ display: 'flex' }}>
-                    
+                    <Card style={{ width: '100%', marginBottom: '0px' }}>
+                      <CardBody>
+                        <div className="chart-wrapper">
+                          <Line data={line} options={options} />
+                        </div>
+                      </CardBody>
+            </Card>
                   </Col>
                 </Row>
               </CardBody>
@@ -180,7 +220,7 @@ class Layout3 extends Component {
                               <br />
                               <span>
                                 A1
-                            </span> 
+                            </span>
                             </div>
                           </Col>
                         </Row>
@@ -204,7 +244,7 @@ class Layout3 extends Component {
                               </span>
                               <br />
                               <span>
-                              Charlie puth
+                                Charlie puth
                             </span>
                             </div>
                           </Col>
@@ -281,7 +321,7 @@ class Layout3 extends Component {
                               </span>
                               <br />
                               <span>
-                                  Madonna
+                                Madonna
                             </span>
                             </div>
                           </Col>
@@ -331,8 +371,8 @@ class Layout3 extends Component {
                               </span>
                               <br />
                               <span>
-                                
-                              Michael Jackson
+
+                                Michael Jackson
                             </span>
                             </div>
                           </Col>
