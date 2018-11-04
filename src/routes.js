@@ -22,6 +22,11 @@ const Layout3 = Loadable({
   loading: Loading,
 });
 
+const SearchLayout = Loadable({
+  loader: () => import('./views/SearchLayout'),
+  loading: Loading,
+});
+
 const BrandButtons = Loadable({
   loader: () => import('./views/Buttons/BrandButtons'),
   loading: Loading,
@@ -84,12 +89,12 @@ const User = Loadable({
 });
 
 
-
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/layout1', name: 'layout1', component: Layout1 },
   { path: '/layout2', name: 'layout2', component: Layout2 },
   { path: '/layout3', name: 'layout3', component: Layout3 },
+  { path: '/search', name: 'SearchLayout', component: SearchLayout },
   { path: '/buttons', exact: true, name: 'Buttons', component: Buttons },
   { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
   { path: '/buttons/button-dropdowns', name: 'Button Dropdowns', component: ButtonDropdowns },
