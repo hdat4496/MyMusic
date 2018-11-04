@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, Pie } from 'react-chartjs-2';
 import {
   Button,
   ButtonGroup,
@@ -8,6 +8,7 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  CardHeader,
   Col,
   Progress,
   Row,

@@ -90,24 +90,22 @@ const options = {
 }
 class Layout1 extends Component {
   render() {
-
-
-
     return (
       <div className="animated fadeIn">
-        <Row >
+        <Row style={{ marginTop: '20px' }} >
           <Col xs="12" sm="12" >
             <div style={{ position: 'relative', display: 'block' }}>
               <img className='img-thumbnail img-avatar' src={artistimg} alt="admin@bootstrapmaster.com"
-                style={{ width: '200px', height: '200px', position: 'absolute', bottom: '-10%', left: '10%' }} />
+                style={{ width: '200px', height: '200px', position: 'absolute', bottom: '10%', left: '3%' }} />
               <img style={{ width: '100%', height: '270px' }} src={musicimg} alt="Music" />
             </div>
-            <CardHeader style={{ height: '40px' }}>
-              <i className="fa fa-twitter fa-lg float-right "></i>
-              <i className="fa fa-instagram fa-lg float-right"></i>
-              <i className="fa fa-facebook fa-lg float-right"></i>
-            </CardHeader>
-
+            <Card>
+              <CardBody style={{ fontSize: '20px', padding: '0,8rem' }}>
+                <i style={{ margin: '0 5px' }} className="fa fa-twitter fa-lg float-right"></i>
+                <i style={{ margin: '0 5px' }} className="fa fa-instagram fa-lg float-right"></i>
+                <i style={{ margin: '0 5px' }} className="fa fa-facebook fa-lg float-right"></i>
+              </CardBody>
+            </Card>
           </Col>
         </Row>
 
@@ -119,14 +117,20 @@ class Layout1 extends Component {
                   <Col xs="3" sm="3" style={{ height: '70%' }}>
                     <img className="img-thumbnail" style={{ height: '100%', width: '100%' }} src='/assets/img/song/beatifulinwhite.jpg' alt="Music" />
                   </Col>
-                  <Col xs="8" sm="8" style={{ margin: '10px auto' }}>
+                  <Col xs="7" sm="7" style={{ margin: '10px auto' }}>
                     <p style={{ fontSize: '50px' }}>Beautiful in white</p>
                     <p style={{ fontSize: '35px' }}>Westlife</p>
                   </Col>
                   <Col xs="1" sm="1" >
-                    <i className="icon-playlist icons font-2xl"></i>
-                    <i className="icon-cloud-download icons font-2xl" ></i>
-                    <i className="icon-heart icons font-2xl"></i>
+                    <Row style={{margin:'20px'}}>
+                      <i className="icon-playlist icons font-2xl"></i>
+                    </Row>
+                    <Row style={{margin:'20px'}}>
+                      <i className="icon-cloud-download icons font-2xl" ></i>
+                    </Row>
+                    <Row style={{margin:'20px'}}>
+                      <i className="icon-heart icons font-2xl"></i>
+                    </Row>
                   </Col>
                   <audio controls style={{ width: '100%' }}>
                     <source src="assets/audio/Beautiful-In-White-Westlife.mp3" type="audio/ogg" />
@@ -176,29 +180,29 @@ class Layout1 extends Component {
                 Music features
               </CardHeader>
               <CardBody style={{ height: '100%' }}>
-                      <div className="text-center">Speechiness</div>
-                      <Progress value='50'> 50%</Progress>
-                      <br/>
-                      <div className="text-center">Acousticness</div>
-                      <Progress value="25">25% </Progress>
-                      <br/>
-                      <div className="text-center">Instrumentalness</div>
-                      <Progress value={50}>50% </Progress>
-                      <br/>
-                      <div className="text-center">Valence</div>
-                      <Progress value={75}>75% </Progress>
-                      <br/>
-                      <div className="text-center">Liveness</div>
-                      <Progress value="100">100% </Progress>
-                      <br/>
-                      <div className="text-center">Energy</div>
-                      <Progress value='10'> 10%</Progress>
-                      <br/>
-                      <div className="text-center">Danceability</div>
-                      <Progress value="25">25% </Progress>
-                      <br/>
-                      <div className="text-center">Mode</div>
-                      <Progress value={50}>50% </Progress>     
+                <div className="text-center">Speechiness</div>
+                <Progress value='50'> 50%</Progress>
+                <br />
+                <div className="text-center">Acousticness</div>
+                <Progress value="25">25% </Progress>
+                <br />
+                <div className="text-center">Instrumentalness</div>
+                <Progress value={50}>50% </Progress>
+                <br />
+                <div className="text-center">Valence</div>
+                <Progress value={75}>75% </Progress>
+                <br />
+                <div className="text-center">Liveness</div>
+                <Progress value="100">100% </Progress>
+                <br />
+                <div className="text-center">Energy</div>
+                <Progress value='10'> 10%</Progress>
+                <br />
+                <div className="text-center">Danceability</div>
+                <Progress value="25">25% </Progress>
+                <br />
+                <div className="text-center">Mode</div>
+                <Progress value={50}>50% </Progress>
               </CardBody>
             </Card>
           </Col>
@@ -212,15 +216,12 @@ class Layout1 extends Component {
               </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem className="justify-content-between">
-                  <span>Love me like you do</span>
-                  <i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i>
-                  </ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>Look what you made me do</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>Girls like you</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>One more night</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>..Ready for it?</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
-                  <ListGroupItem className="justify-content-between"><span>Way back home</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left" pill></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Love me like you do</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Look what you made me do</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Girls like you</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>One more night</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>..Ready for it?</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
+                  <ListGroupItem className="justify-content-between"><span>Way back home</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
                 </ListGroup>
               </CardBody>
             </Card>
@@ -228,7 +229,7 @@ class Layout1 extends Component {
           <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardBody style={{ height: '100%' }}>
-              <div className="brand-card">
+                <div className="brand-card">
                   <div className="brand-card-header bg-twitter">
                     <i className="icon-music-tone-alt icons font-2xl"></i>
                     <div className="chart-wrapper">

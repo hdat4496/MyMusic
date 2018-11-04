@@ -9,9 +9,10 @@ import {
   Jumbotron,
   Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
 } from 'reactstrap';
+import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 
-
+import { Line } from 'react-chartjs-2';
 //=============================//===================
 
 const items = [
