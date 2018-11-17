@@ -27,7 +27,18 @@ class DefaultHeader extends Component {
           full={{ src: logoicon, width: 50, height: 40, alt: 'Music Logo' }}
           minimized={{ src: sygnet, width: 30, height: 30, alt: 'Music Logo' }}
         />
-        <InputGroup style={{margin:  'auto', width:'40%'}}>
+        <Nav className="d-md-down-none" navbar>
+          <NavItem className="px-3">
+            <NavLink href="#/layout1">Layout1</NavLink>
+          </NavItem>
+          <NavItem className="px-3">
+            <NavLink href="#/layout2">Layout2</NavLink>
+          </NavItem>
+          <NavItem className="px-3">
+            <NavLink href="#/layout3">Layout3</NavLink>
+          </NavItem>
+        </Nav>
+        <InputGroup style={{ margin: 'auto', width: '40%' }}>
           <InputGroupAddon addonType="prepend">
             <Button type="button" color="primary"><i className="fa fa-search"></i> Search</Button>
           </InputGroupAddon>
