@@ -297,7 +297,7 @@ const options = {
 
 //==============================//============================
 
-class Layout2 extends Component {
+class Chart extends Component {
   constructor(props) {
     super(props);
 
@@ -533,4 +533,4 @@ class Layout2 extends Component {
   }
 }
 
-export default Layout2;
+export default Chart;

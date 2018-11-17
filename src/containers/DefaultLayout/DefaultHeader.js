@@ -29,13 +29,13 @@ class DefaultHeader extends Component {
         />
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
-            <NavLink href="#/layout1">Layout1</NavLink>
+            <NavLink href="#/track">Track</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink href="#/layout2">Layout2</NavLink>
+            <NavLink href="#/chart">Chart</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink href="#/layout3">Layout3</NavLink>
+            <NavLink href="#/home">Home</NavLink>
           </NavItem>
         </Nav>
         <InputGroup style={{ margin: 'auto', width: '40%' }}>

@@ -71,7 +71,7 @@ const options = {
 
 
 
-class Layout3 extends Component {
+class Home extends Component {
   state = {};
   constructor(props) {
     super(props);
@@ -411,4 +411,4 @@ class Layout3 extends Component {
   }
 }
 
-export default Layout3;
+export default Home;

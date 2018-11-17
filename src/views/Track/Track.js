@@ -3,7 +3,7 @@ import { Pie, Line } from 'react-chartjs-2';
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
 import musicimg from '../../assets/img/brand/music.jpg'
 import artistimg from '../../assets/img/brand/avatar.jpg'
-import Widget03 from '../../views/Widgets/Widget03'
+import Widget03 from '../Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 //========================//=====================
@@ -88,7 +88,7 @@ const options = {
   },
   maintainAspectRatio: false
 }
-class Layout1 extends Component {
+class Track extends Component {
   render() {
     return (
       <div className="animated fadeIn">
@@ -279,4 +279,4 @@ class Layout1 extends Component {
   }
 }
 
-export default Layout1;
+export default Track;

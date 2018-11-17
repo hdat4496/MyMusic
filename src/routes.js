@@ -7,18 +7,18 @@ function Loading() {
   return <div>Loading...</div>;
 }
 
-const Layout1 = Loadable({
-  loader: () => import('./views/Layout1'),
+const Track = Loadable({
+  loader: () => import('./views/Track'),
   loading: Loading,
 });
 
-const Layout2 = Loadable({
-  loader: () => import('./views/Layout2'),
+const Chart = Loadable({
+  loader: () => import('./views/Chart'),
   loading: Loading,
 });
 
-const Layout3 = Loadable({
-  loader: () => import('./views/Layout3'),
+const Home = Loadable({
+  loader: () => import('./views/Home'),
   loading: Loading,
 });
 
@@ -91,9 +91,9 @@ const User = Loadable({
 
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
-  { path: '/layout1', name: 'layout1', component: Layout1 },
-  { path: '/layout2', name: 'layout2', component: Layout2 },
-  { path: '/layout3', name: 'layout3', component: Layout3 },
+  { path: '/track', name: 'track', component: Track },
+  { path: '/chart', name: 'chart', component: Chart },
+  { path: '/home', name: 'home', component: Home },
   { path: '/search', name: 'SearchLayout', component: SearchLayout },
   { path: '/buttons', exact: true, name: 'Buttons', component: Buttons },
   { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
