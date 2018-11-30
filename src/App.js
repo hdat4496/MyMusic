@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
-
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from './reducers';
 // Containers
 import { DefaultLayout } from './containers';
 // Pages
 import { Login, Page404, Page500, Register } from './views/Pages';
 
-
+const store = createStore(rootReducer);
+window.store = store;
 class App extends Component {
   render() {
     return (
+      <Provider store={store}>
       <HashRouter>
         <Switch>
           <Route exact path="/login" name="Login Page" component={Login} />
@@ -20,6 +24,7 @@ class App extends Component {
           <Route path="/" name="Home" component={DefaultLayout} />
         </Switch>
       </HashRouter>
+      </Provider> 
     );
   }
 }

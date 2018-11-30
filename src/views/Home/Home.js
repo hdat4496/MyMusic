@@ -10,11 +10,11 @@ import {
   Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-
-
+import { connect } from 'react-redux';
+import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 //=============================//===================
-
+const _url = 'http://localhost:10010';
 const items = [
   {
     src: 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1607923e7e2%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1607923e7e2%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285.9296875%22%20y%3D%22217.75625%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E',
@@ -34,7 +34,7 @@ const items = [
 ];
 
 const line = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  labels: ['January', 'February', 'March', 'April', '', 'June', ''],
   datasets: [
     {
       label: 'Tempo',
@@ -72,11 +72,15 @@ const options = {
 
 
 class Home extends Component {
-  state = {};
+  // state = {
+
+  // };
   constructor(props) {
     super(props);
     this.state = {
-      activeIndex: 0, expanded: false
+      activeIndex: 0,
+      expanded: false,
+      homeTrack: []
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -85,6 +89,29 @@ class Home extends Component {
     this.onExited = this.onExited.bind(this);
   }
 
+  componentDidMount() {
+    var self = this;
+    axios.get(_url + '/track/get-home-track', {
+      params: {
+        token: this.props.auth.token
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        self.setState({
+          ...self.state,
+          homeTrack: res.data.value
+        });
+        console.log(window.location.href);
+      } else {
+        console.log(res.data.message);
+      }
+
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  
   onExiting() {
     this.animating = true;
   }
@@ -114,9 +141,15 @@ class Home extends Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  handleClickTrack(id) {
+    this.props.history.push(`/track/${id}`)
+    console.log(id);
+  }
   render() {
-    const { activeIndex } = this.state;
-
+    const { homeTrack, activeIndex } = this.state;
+    const homeTrack_1 = homeTrack.slice(0, 4);
+    const homeTrack_2 = homeTrack.slice(4);
+    console.log(homeTrack_1);
     const slides = items.map((item) => {
       return (
         <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src}>
@@ -151,10 +184,15 @@ class Home extends Component {
                       <p className="lead">Present many music feature of hit songs and predict if a song will be a hit vernus. That's so awesome!</p>
                       <Row style={{ marginTop: '30px auto' }}>
                         <Col xs="5" sm="3">
-                          <Button block color="primary" className="btn-pill">Let's start</Button>
+                          <Button block color="primary" onClick={()=>{
+                            this.props.history.push('/chart');
+                          }} className="btn-pill">Let's start</Button>
                         </Col>
                         <Col xs="5" sm="3">
-                          <Button block outline color="primary" className="btn-pill"> Sign in</Button>
+                          {this.props.auth.token.length == 0 ? <Button block outline color="primary" className="btn-pill" onClick={() => {
+                            this.props.history.push('/login');
+                          }}> Sign in</Button> : ''}
+
                         </Col>
                       </Row>
                     </Jumbotron>
@@ -166,7 +204,7 @@ class Home extends Component {
                           <Line data={line} options={options} />
                         </div>
                       </CardBody>
-            </Card>
+                    </Card>
                   </Col>
                 </Row>
               </CardBody>
@@ -178,209 +216,64 @@ class Home extends Component {
             <Card style={{ width: '100%' }}>
               <CardBody>
                 <Row>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/beatifulinwhite.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/westlife.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>Beatiful in white.</b>
-                              </span>
-                              <br />
-                              <span>
-                                West life
+                {homeTrack_1.map((e, i) => {
+                    return <Col xs="3" sm="3" className='audio-item'>
+                      <Card style={{ width: '100%' }} onClick={()=>{
+                        this.handleClickTrack(e.id);
+                      }} >
+                        <CardHeader className='audio-item-header'>
+                          <img style={{ width: '100%' }} src={e.track_imageurl} alt="Music" />
+                        </CardHeader>
+                        <CardBody className='audio-item-body'>
+                          <Row>
+                            <Col xs="3" sm="3" className='audio-item-body-avatar'>
+                              <img src={e.artist_imageurl} className="img-avatar" alt="avatar" />
+                            </Col>
+                            <Col xs="9" sm="9" className='audio-item-body-info' >
+                              <div>
+                                <span>
+                                  <b>{e.title}</b>
+                                </span>
+                                <br />
+                                <span>
+                                  {e.artist}
                             </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/everytime.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/a1.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>EveryTime</b>
-                              </span>
-                              <br />
-                              <span>
-                                A1
+                              </div>
+                            </Col>
+                          </Row>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  })}
+                {homeTrack_2.map((e, i) => {
+                    return <Col xs="3" sm="3" className='audio-item'>
+                      <Card style={{ width: '100%' }} onClick={()=>{
+                        this.handleClickTrack(e.id);
+                      }}>
+                        <CardHeader className='audio-item-header'>
+                          <img style={{ width: '100%' }} src={e.track_imageurl} alt="Music" />
+                        </CardHeader>
+                        <CardBody className='audio-item-body'>
+                          <Row>
+                            <Col xs="3" sm="3" className='audio-item-body-avatar'>
+                              <img src={e.artist_imageurl} className="img-avatar" alt="avatar" />
+                            </Col>
+                            <Col xs="9" sm="9" className='audio-item-body-info' >
+                              <div>
+                                <span>
+                                  <b>{e.title}</b>
+                                </span>
+                                <br />
+                                <span>
+                                  {e.artist}
                             </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/attention.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/charlieputh.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>Attention</b>
-                              </span>
-                              <br />
-                              <span>
-                                Charlie puth
-                            </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/untilyou.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/shayneward.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>Until you</b>
-                              </span>
-                              <br />
-                              <span>
-                                Shayne Ward
-                            </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/everyiloveyou.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/boyzone.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>Every i love you</b>
-                              </span>
-                              <br />
-                              <span>
-                                Boyzone
-                            </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/hungup.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/madonna.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>Hung Up</b>
-                              </span>
-                              <br />
-                              <span>
-                                Madonna
-                            </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/hotelcalifornia.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/eagels.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>Hotel California</b>
-                              </span>
-                              <br />
-                              <span>
-                                Eagles
-                            </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col xs="3" sm="3" className='audio-item'>
-                    <Card style={{ width: '100%' }}>
-                      <CardHeader className='audio-item-header'>
-                        <img style={{ width: '100%' }} src='/assets/img/song/youarenotalone.jpg' alt="Music" />
-                      </CardHeader>
-                      <CardBody className='audio-item-body'>
-                        <Row>
-                          <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                            <img src='/assets/img/singer/michaeljackson.jpg' className="img-avatar" alt="avatar" />
-                          </Col>
-                          <Col xs="9" sm="9" className='audio-item-body-info' >
-                            <div>
-                              <span>
-                                <b>You are not alone</b>
-                              </span>
-                              <br />
-                              <span>
-
-                                Michael Jackson
-                            </span>
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
+                              </div>
+                            </Col>
+                          </Row>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  })}
                 </Row>
               </CardBody>
             </Card>
@@ -390,11 +283,9 @@ class Home extends Component {
           <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardBody>
-
                 <Col xs="12" xl="12">
-
                   <Carousel activeIndex={activeIndex} next={this.next} previous={this.previous}>
-                    <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+                    <CarouselIndicators items={items} activeIndex={1} onClickHandler={this.goToIndex} />
                     {slides2}
                     <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
                     <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
@@ -410,5 +301,11 @@ class Home extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
 
-export default Home;
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

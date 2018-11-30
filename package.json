@@ -17,6 +17,7 @@
     "@coreui/icons": "0.3.0",
     "@coreui/react": "^2.0.9",
     "@material-ui/core": "^3.3.2",
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "chart.js": "^2.7.2",
     "classnames": "^2.2.6",
@@ -32,11 +33,13 @@
     "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.5.2",
     "react-loadable": "^5.5.0",
+    "react-redux": "^5.1.1",
     "react-responsive-music-player": "^0.3.0",
     "react-router-config": "^4.4.0-beta.1",
     "react-router-dom": "^4.3.1",
     "react-test-renderer": "^16.5.2",
     "reactstrap": "^6.5.0",
+    "redux": "^4.0.1",
     "simple-line-icons": "^2.4.1"
   },
   "devDependencies": {

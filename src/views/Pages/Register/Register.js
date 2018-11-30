@@ -1,7 +1,49 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { login } from '../../../actions/authAction';
+import URL from '../../../helpers/url';
+
+const _url = 'http://localhost:10010';
 
 class Register extends Component {
+
+  handleSignup = (e) => {
+    e.preventDefault();
+    
+    var username = this.username.value;
+    var fullname = this.fullname.value;
+    var password = this.password.value;
+    var self=this;
+
+    // this.props.form.validateFields((err, values) => {
+    //   if (!err) {
+        axios.post(_url + '/user/signup', {
+          user_info_signup: {
+            username: username,
+            fullname: fullname,
+            password: password
+          }
+        }).then(function (res) {
+          if (res.data.status === 200) {
+            const { username, token } = res.data;
+            var obj = { username, token };
+            self.props.login(obj);
+            localStorage.setItem("username", username);
+            localStorage.setItem("token", token);
+            self.props.history.push(URL.HOME);
+          } 
+
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+    //   }
+    // });
+  }
+
+
   render() {
     return (
       <div className="app flex-row align-items-center">
@@ -10,7 +52,7 @@ class Register extends Component {
             <Col md="6">
               <Card className="mx-4">
                 <CardBody className="p-4">
-                  <Form>
+                  <Form  onSubmit={this.handleSignup}>
                     <h1>Register</h1>
                     <p className="text-muted">Create your account</p>
                     <InputGroup className="mb-3">
@@ -19,13 +61,15 @@ class Register extends Component {
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" placeholder="Username" autoComplete="username" />
+                      <Input innerRef={(node) => this.username = node} type="text" placeholder="Username" autoComplete="username" />
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText>@</InputGroupText>
+                        <InputGroupText>
+                          <i className="fa fa-id-card-o "></i>
+                        </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" placeholder="Email" autoComplete="email" />
+                      <Input innerRef={(node) => this.fullname = node} type="text" placeholder="Fullname" autoComplete="fullname" />
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -33,7 +77,7 @@ class Register extends Component {
                           <i className="icon-lock"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" placeholder="Password" autoComplete="new-password" />
+                      <Input innerRef={(node) => this.password = node} type="password" placeholder="Password" autoComplete="new-password" />
                     </InputGroup>
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
@@ -46,7 +90,7 @@ class Register extends Component {
                     <Button color="success" block>Create Account</Button>
                   </Form>
                 </CardBody>
-                <CardFooter className="p-4">
+                {/* <CardFooter className="p-4">
                   <Row>
                     <Col xs="12" sm="6">
                       <Button className="btn-facebook" block><span>facebook</span></Button>
@@ -55,7 +99,7 @@ class Register extends Component {
                       <Button className="btn-twitter" block><span>twitter</span></Button>
                     </Col>
                   </Row>
-                </CardFooter>
+                </CardFooter> */}
               </Card>
             </Col>
           </Row>
@@ -64,5 +108,12 @@ class Register extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({ 
+  auth: state.auth 
+});
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+  login: (authObj) => dispatch(login(authObj))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
