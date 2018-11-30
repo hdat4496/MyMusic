@@ -33,32 +33,6 @@ const items = [
   },
 ];
 
-const line = {
-  labels: ['January', 'February', 'March', 'April', '', 'June', ''],
-  datasets: [
-    {
-      label: 'Tempo',
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: 'rgba(75,192,192,0.4)',
-      borderColor: 'rgba(75,192,192,1)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40],
-    },
-  ],
-};
 const options = {
   tooltips: {
     enabled: false,
@@ -80,7 +54,10 @@ class Home extends Component {
     this.state = {
       activeIndex: 0,
       expanded: false,
-      homeTrack: []
+      homeTrack: [],
+      homeChartVal: '',
+      chartLabel : [],
+      chartData : []
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -89,9 +66,9 @@ class Home extends Component {
     this.onExited = this.onExited.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     var self = this;
-    axios.get(_url + '/track/get-home-track', {
+    await axios.get(_url + '/track/get-home-track', {
       params: {
         token: this.props.auth.token
       }
@@ -101,7 +78,35 @@ class Home extends Component {
           ...self.state,
           homeTrack: res.data.value
         });
-        console.log(window.location.href);
+      } else {
+        console.log(res.data.message);
+      }
+
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
+    await axios.get(_url + '/chart/get-report-home', {
+      params: {
+        key: this.props.auth.token
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        const label = [];
+        const data = [];
+        for (var key of Object.keys(res.data.value.data)) {
+          label.push(key);
+          data.push(res.data.value.data[key]);
+        }
+        self.setState({
+          ...self.state,
+          homeChartVal: res.data.value,
+          chartLabel: label,
+          chartData: data
+        });
+        console.log(res.data)
       } else {
         console.log(res.data.message);
       }
@@ -111,7 +116,7 @@ class Home extends Component {
         console.log(error);
       });
   }
-  
+
   onExiting() {
     this.animating = true;
   }
@@ -146,10 +151,9 @@ class Home extends Component {
     console.log(id);
   }
   render() {
-    const { homeTrack, activeIndex } = this.state;
+    const { homeTrack, activeIndex, homeChartVal, chartData, chartLabel } = this.state;
     const homeTrack_1 = homeTrack.slice(0, 4);
     const homeTrack_2 = homeTrack.slice(4);
-    console.log(homeTrack_1);
     const slides = items.map((item) => {
       return (
         <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src}>
@@ -170,6 +174,34 @@ class Home extends Component {
         </CarouselItem>
       );
     });
+
+
+    const line = {
+      labels: chartLabel,
+      datasets: [
+        {
+          label: homeChartVal.featureName,
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: 'rgba(75,192,192,0.4)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: chartData,
+        },
+      ],
+    };
     return (
       <div className="animated fadeIn">
         <Row>
@@ -184,7 +216,7 @@ class Home extends Component {
                       <p className="lead">Present many music feature of hit songs and predict if a song will be a hit vernus. That's so awesome!</p>
                       <Row style={{ marginTop: '30px auto' }}>
                         <Col xs="5" sm="3">
-                          <Button block color="primary" onClick={()=>{
+                          <Button block color="primary" onClick={() => {
                             this.props.history.push('/chart');
                           }} className="btn-pill">Let's start</Button>
                         </Col>
@@ -216,9 +248,9 @@ class Home extends Component {
             <Card style={{ width: '100%' }}>
               <CardBody>
                 <Row>
-                {homeTrack_1.map((e, i) => {
+                  {homeTrack_1.map((e, i) => {
                     return <Col xs="3" sm="3" className='audio-item'>
-                      <Card style={{ width: '100%' }} onClick={()=>{
+                      <Card style={{ width: '100%' }} onClick={() => {
                         this.handleClickTrack(e.id);
                       }} >
                         <CardHeader className='audio-item-header'>
@@ -237,7 +269,7 @@ class Home extends Component {
                                 <br />
                                 <span>
                                   {e.artist}
-                            </span>
+                                </span>
                               </div>
                             </Col>
                           </Row>
@@ -245,9 +277,9 @@ class Home extends Component {
                       </Card>
                     </Col>
                   })}
-                {homeTrack_2.map((e, i) => {
+                  {homeTrack_2.map((e, i) => {
                     return <Col xs="3" sm="3" className='audio-item'>
-                      <Card style={{ width: '100%' }} onClick={()=>{
+                      <Card style={{ width: '100%' }} onClick={() => {
                         this.handleClickTrack(e.id);
                       }}>
                         <CardHeader className='audio-item-header'>
@@ -266,7 +298,7 @@ class Home extends Component {
                                 <br />
                                 <span>
                                   {e.artist}
-                            </span>
+                                </span>
                               </div>
                             </Col>
                           </Row>

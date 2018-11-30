@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Line, Doughnut, Pie } from 'react-chartjs-2';
 import {
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
   Card,
   CardBody,
   CardFooter,
@@ -12,11 +9,15 @@ import {
   Col,
   Progress,
   Row,
-
+  Button,
+  Label,
+  Input
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
+import { connect } from 'react-redux';
+import axios from 'axios';
+const _url = 'http://localhost:10010';
 const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
 
@@ -216,7 +217,7 @@ const line = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [
     {
-      label: 'Sample data',
+      label: 'Sample Data',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -243,7 +244,7 @@ const multi_line = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [
     {
-      label: 'Sample data',
+      label: 'Speechiness',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -264,7 +265,7 @@ const multi_line = {
       data: [65, 59, 80, 81, 56, 55, 40],
     },
     {
-      label: 'Sample data 1',
+      label: 'instrumentalness',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(233, 30, 99, 0.7)',
@@ -298,6 +299,8 @@ const options = {
 //==============================//============================
 
 class Chart extends Component {
+
+
   constructor(props) {
     super(props);
 
@@ -307,7 +310,64 @@ class Chart extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
+      chartVal: '',
+
+      modeLable: [],
+      modeData: [],
+
+      timeSignatureLable: [],
+      timeSignatureData: [],
+
+      keyLable: [],
+      keyData: [],
+
+      tempoLable: [],
+      tempoData: [],
+
+
+
+
+
+      durationLable: [],
+      durationData: [],
+
+      valenceLable: [],
+      valenceData: [],
+
+      loudnessLable: [],
+      loudnessData: [],
+      
+      rhythmLable: [],
+      energyData: [],
+      danceabilityData: [],
+      acousticnessData: []
+      
+
     };
+  }
+
+  componentDidMount() {
+    var self = this;
+    axios.get(_url + '/chart/get-report', {
+      params: {
+        genreType: 0
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        self.setState({
+          ...self.state,
+          chartVal: res.data.value
+        });
+        console.log(res.data.value);
+      } else {
+        console.log(res.data.message);
+      }
+
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   toggle() {
@@ -325,19 +385,54 @@ class Chart extends Component {
   render() {
     return (
       <div className="animated fadeIn">
+
+        <Row>
+          <Col xs="12" sm="12" style={{ margin: '10px auto' }}>
+            <Card style={{ width: '100%' }}>
+              <CardHeader>
+                Please enter input
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col xs="0.5" md="0.5" style={{ margin: 'auto' }}>
+                    <Label htmlFor="select">Genre</Label>
+                  </Col>
+                  <Col xs="2" md="2">
+                    <Input type="select" name="genre" id="genre">
+                      <option value="0">Please select</option>
+                      <option value="dance">Dance</option>
+                      <option value="rock">Rock</option>
+                      <option value="rb">R&B</option>
+                    </Input>
+                  </Col>
+                  <Col xs="0.5" md="0.5" style={{ margin: 'auto' }}>
+                    <Label htmlFor="date-start">Start date</Label>
+                  </Col>
+                  <Col xs="3" md="3">
+                    <Input type="date" id="date-start" name="date-start" placeholder="date" />
+                  </Col>
+                  <Col xs="0.5" md="0.5" style={{ margin: 'auto' }}>
+                    <Label htmlFor="date-end">End date</Label>
+                  </Col>
+                  <Col xs="3" md="3">
+                    <Input type="date" id="date-end" name="date-end" placeholder="date" />
+                  </Col>
+                  <Col xs="1" md="1" style={{ margin: 'auto' }}>
+                    <Button block color="primary" className="btn-pill">Get chart</Button>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+
         <Row>
           <Col xs="4" sm="4" style={{ margin: '10px auto' }}>
-
             <Row>
               <Col xs="12">
                 <Card style={{ width: '100%' }}>
                   <CardHeader>
                     Mode
-                    <div className="card-header-actions">
-                      <a href="http://www.chartjs.org" className="card-header-action">
-                        <small className="text-muted">docs</small>
-                      </a>
-                    </div>
                   </CardHeader>
                   <CardBody>
                     <div className="chart-wrapper">
@@ -353,11 +448,6 @@ class Chart extends Component {
                 <Card style={{ width: '100%' }}>
                   <CardHeader>
                     Time signature
-              <div className="card-header-actions">
-                      <a href="http://www.chartjs.org" className="card-header-action">
-                        <small className="text-muted">docs</small>
-                      </a>
-                    </div>
                   </CardHeader>
                   <CardBody>
                     <div className="chart-wrapper" >
@@ -373,20 +463,10 @@ class Chart extends Component {
           <Col xs="8" sm="8" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardBody>
-
                 <Row>
                   <Col sm="5">
                     <CardTitle className="mb-0">Rhythm</CardTitle>
                     <div className="small text-muted">April 2018</div>
-                  </Col>
-                  <Col sm="7" className="d-none d-sm-inline-block">
-                    <ButtonToolbar className="float-right" aria-label="Toolbar with button groups">
-                      <ButtonGroup className="mr-3" aria-label="First group">
-                        <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(1)} active={this.state.radioSelected === 1}>Week</Button>
-                        <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(2)} active={this.state.radioSelected === 2}>Month</Button>
-                        <Button color="outline-secondary" onClick={() => this.onRadioBtnClick(3)} active={this.state.radioSelected === 3}>Year</Button>
-                      </ButtonGroup>
-                    </ButtonToolbar>
                   </Col>
                 </Row>
                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
@@ -421,11 +501,6 @@ class Chart extends Component {
             <Card style={{ width: '100%' }}>
               <CardHeader>
                 Key
-              <div className="card-header-actions">
-                  <a href="http://www.chartjs.org" className="card-header-action">
-                    <small className="text-muted">docs</small>
-                  </a>
-                </div>
               </CardHeader>
               <CardBody style={{ height: '100%' }}>
 
@@ -441,11 +516,6 @@ class Chart extends Component {
             <Card style={{ width: '100%' }}>
               <CardHeader>
                 Tempo
-              <div className="card-header-actions">
-                  <a href="http://www.chartjs.org" className="card-header-action">
-                    <small className="text-muted">docs</small>
-                  </a>
-                </div>
               </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
@@ -458,11 +528,6 @@ class Chart extends Component {
             <Card style={{ width: '100%' }}>
               <CardHeader>
                 Vocality
-              <div className="card-header-actions">
-                  <a href="http://www.chartjs.org" className="card-header-action">
-                    <small className="text-muted">docs</small>
-                  </a>
-                </div>
               </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
@@ -472,18 +537,11 @@ class Chart extends Component {
             </Card>
           </Col>
         </Row>
-
-
         <Row>
           <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardHeader>
                 Duration
-              <div className="card-header-actions">
-                  <a href="http://www.chartjs.org" className="card-header-action">
-                    <small className="text-muted">docs</small>
-                  </a>
-                </div>
               </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
@@ -497,11 +555,6 @@ class Chart extends Component {
             <Card style={{ width: '100%' }}>
               <CardHeader>
                 Valence
-              <div className="card-header-actions">
-                  <a href="http://www.chartjs.org" className="card-header-action">
-                    <small className="text-muted">docs</small>
-                  </a>
-                </div>
               </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
@@ -514,11 +567,6 @@ class Chart extends Component {
             <Card style={{ width: '100%' }}>
               <CardHeader>
                 Loudness
-              <div className="card-header-actions">
-                  <a href="http://www.chartjs.org" className="card-header-action">
-                    <small className="text-muted">docs</small>
-                  </a>
-                </div>
               </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
