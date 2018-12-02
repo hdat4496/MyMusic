@@ -16,7 +16,7 @@ import DefaultFooter from './DefaultFooter';
 import routes from '../../routes';
 import { connect } from 'react-redux';
 import { logout, login } from '../../actions/authAction';
-import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, InputGroup, InputGroupAddon, Button, Input, Form } from 'reactstrap';
 
 class DefaultLayout extends Component {
   handleLogout = (e) => {
@@ -42,6 +42,23 @@ class DefaultLayout extends Component {
       }
     }
   }
+
+  handleSearch= ()=>{
+    const keyword = this.keyword.value;
+    const urlCurrent = window.location.href;
+    if(keyword!==''){
+      this.props.history.push(`/search?keyword=${keyword}`);
+    }
+    if (urlCurrent.includes('search')){
+      window.location.reload();
+    }
+  }
+
+  handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      this.handleSearch();
+    }
+};
   render() {
     const { auth } = this.props;
     return (
@@ -54,18 +71,20 @@ class DefaultLayout extends Component {
             />
             <Nav className="d-md-down-none" navbar>
               <NavItem className="px-3">
-                <NavLink href="#/" >Home</NavLink>
+                <NavLink href="/" >Home</NavLink>
               </NavItem>
               <NavItem className="px-3">
-                <NavLink href="#/chart">Chart</NavLink>
+                <NavLink href="/chart">Chart</NavLink>
               </NavItem>
             </Nav>
-            <InputGroup style={{ margin: 'auto', width: '40%' }}>
-              <InputGroupAddon addonType="prepend">
-                <Button type="button" color="primary"><i className="fa fa-search"></i> Search</Button>
-              </InputGroupAddon>
-              <Input type="text" id="input1-group2" name="input1-group2" placeholder="Username" />
-            </InputGroup>
+
+              <InputGroup style={{ margin: 'auto', width: '60%' }}>
+                <InputGroupAddon addonType="prepend">
+                  <Button  onClick={this.handleSearch} type="button" color="primary"><i className="fa fa-search"></i> Search</Button>
+                </InputGroupAddon>
+                <Input onKeyPress={this.handleKeyPress} innerRef={(node) => this.keyword = node} type="text" id="input1-group2" name="input1-group2" placeholder="Please input song name or artist" />
+              </InputGroup>
+
             {this.props.auth.token.length > 0 ? <Nav className="ml-auto" navbar>
               <AppHeaderDropdown direction="down">
                 <DropdownToggle nav>
@@ -73,9 +92,9 @@ class DefaultLayout extends Component {
                 </DropdownToggle>
                 <DropdownMenu right style={{ right: 'auto' }}>
                   <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
-                  <DropdownItem onClick={()=>{
-                            this.props.history.push('/profile');
-                          }} ><i className="fa fa-user"></i> Profile</DropdownItem>
+                  <DropdownItem onClick={() => {
+                    this.props.history.push('/profile');
+                  }} ><i className="fa fa-user"></i> Profile</DropdownItem>
                   <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
                   <DropdownItem onClick={this.handleLogout}><i className="fa fa-lock"></i> Logout</DropdownItem>
                 </DropdownMenu>

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Pie, Line } from 'react-chartjs-2';
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
 import musicimg from '../../assets/img/brand/music.jpg'
-import artistimg from '../../assets/img/brand/avatar.jpg'
-import Widget03 from '../Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -63,9 +61,6 @@ const socialChartOpts = {
     },
   },
 };
-
-
-
 const options = {
   tooltips: {
     enabled: false,
@@ -76,15 +71,15 @@ const options = {
 class Track extends Component {
 
   state = {
-    trackVal: ''
+    trackVal: '',
+    userFavorite: false
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const urlCurrent = window.location.href.split('/');
     const id = urlCurrent[urlCurrent.length - 1] == '' ? urlCurrent[urlCurrent.length - 2] : urlCurrent[urlCurrent.length - 1];
-    console.log(id);
     var self = this;
-    axios.get(_url + '/track/get-track', {
+    await axios.get(_url + '/track/get-track', {
       params: {
         id: id
       }
@@ -104,9 +99,71 @@ class Track extends Component {
         console.log(error);
       });
 
+    if (this.props.auth.token.length > 0) {
+      await axios.get(_url + '/user/check-favorite', {
+        params: {
+          token: this.props.auth.token,
+          trackid: id
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          console.log(res.data);
+          if (res.data.value){
+            self.setState({
+              ...self.state,
+              userFavorite: true
+            })
+          }
+
+        } else {
+          self.props.history.push('/404')
+        }
+  
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
+  }
+
+  handleClickTrack(id) {
+    this.props.history.push(`/track/${id}`);
+    window.location.reload();
+
+  }
+
+  handleLike = async () =>{
+    var self = this;
+    const urlCurrent = window.location.href.split('/');
+    const id = urlCurrent[urlCurrent.length - 1] == '' ? urlCurrent[urlCurrent.length - 2] : urlCurrent[urlCurrent.length - 1];
+    await axios.get(_url + '/user/put-favorite', {
+      params: {
+        token: this.props.auth.token,
+        trackid: id,
+        like: !self.state.userFavorite
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+          self.setState({
+            ...self.state,
+            userFavorite: !self.state.userFavorite
+          })
+      } else {
+        self.props.history.push('/404')
+      }
+
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
   render() {
-    const { trackVal } = this.state;
+    const { trackVal, userFavorite } = this.state;
+    var starColor = 'black';
+    if(userFavorite){
+      starColor='yellow';
+    }
     if (trackVal) {
       const pie = {
         labels: [
@@ -157,13 +214,14 @@ class Track extends Component {
                       <p style={{ fontSize: '50px' }}>{trackVal.trackInfo.title}</p>
                       <p style={{ fontSize: '35px' }}>{trackVal.trackInfo.artist}</p>
                       <br />
-                      <i style={{ color: '#a1a2af' }}>Lượt xem: {trackVal.trackInfo.listen} | Lượt quan tâm:  {trackVal.trackInfo.like} </i>
-                      <i style={{float: 'right'}} className="icon-star icons font-2xl"></i>
+                      {this.props.auth.token.length > 0 ? <i style={{ color: starColor }} onClick={this.handleLike} className="icon-star icons font-2xl"></i> : ''}
+                      <i style={{ color: '#a1a2af', float: 'right' }}>Lượt xem: {trackVal.trackInfo.listen} | Lượt quan tâm:  {trackVal.trackInfo.like} </i>
+
                     </Col>
                     <audio controls style={{ width: '90%', margin: 'auto' }}>
                       <source src={trackVal.trackInfo.track_preview_url} type="audio/ogg" />
                     </audio>
-                    <a style={{ margin: 'auto' }} href={trackVal.trackInfo.track_url} >Listen Full</a>
+                    <a style={{ margin: 'auto' }} target="_blank" href={trackVal.trackInfo.track_url} >Listen Full</a>
                   </Row>
                 </CardBody>
               </Card>
@@ -191,12 +249,27 @@ class Track extends Component {
                 </CardHeader>
                 <CardBody>
                   <ListGroup>
-                    <ListGroupItem className="justify-content-between"><span>Love me like you do</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
-                    <ListGroupItem className="justify-content-between"><span>Look what you made me do</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
-                    <ListGroupItem className="justify-content-between"><span>Girls like you</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
-                    <ListGroupItem className="justify-content-between"><span>One more night</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
-                    <ListGroupItem className="justify-content-between"><span>..Ready for it?</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
-                    <ListGroupItem className="justify-content-between"><span>Way back home</span><i style={{ margin: '5px 20px 0px 0px' }} className="fa fa-play-circle-o fa-lg float-left"></i></ListGroupItem>
+
+                    {trackVal.recommendTracks.map((e) => {
+                      return <ListGroupItem key={e.id} onClick={() => {
+                        this.handleClickTrack(e.id);
+                      }}>
+                        <Row>
+                          <Col xs="2" sm="2" style={{ display: 'flex' }}>
+                            <img src={e.track_imageurl} style={{ width: '100%', height: '100px' }} />
+                          </Col>
+                          <Col xs="7" sm="7" style={{ margin: 'auto 10px' }}>
+                            <Row>
+                              <h1 style={{ fontSize: '20px' }}>{e.title}</h1></Row>
+                            <Row style={{ marginTop: '5px' }}>
+                              <span style={{ fontSize: '15px' }}>{e.artist}</span>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </ListGroupItem>
+
+                    })}
+
                   </ListGroup>
                 </CardBody>
               </Card>
@@ -318,4 +391,11 @@ class Track extends Component {
   }
 }
 
-export default Track;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Track);

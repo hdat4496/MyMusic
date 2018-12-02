@@ -1,192 +1,198 @@
 import React, { Component } from 'react';
 import { Pie, Line } from 'react-chartjs-2';
-import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
+import { ListGroup, ListGroupItem, Col, Row, Nav, NavItem, NavLink, TabContent, TabPane, Alert } from 'reactstrap';
 import musicimg from '../../assets/img/brand/music.jpg'
-import artistimg from '../../assets/img/brand/avatar.jpg'
-import Widget03 from '../Widgets/Widget03'
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-
+import axios from 'axios';
+import classnames from 'classnames';
 //========================//=====================
-
+const _url = 'http://localhost:10010';
 class SearchLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      activeTab: 'track',
+      byTrack: [],
+      byArtist: [],
+    };
+  }
+  componentDidMount = async () => {
+    const self = this;
+    const urlCurrent = window.location.href.split('=');
+    var keyword = urlCurrent[urlCurrent.length - 1];
+    var byTrack = [], byArtist = [];
+    if (keyword.includes("#")){
+      var lastIndex = keyword.lastIndexOf("#");
+      keyword = keyword.substring(0, lastIndex);
+      }
+    await axios.get(_url + '/track/search', {
+      params: {
+        keyword: keyword,
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        byTrack = res.data.value;
+      } else {
+        self.props.history.push('/500')
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await axios.get(_url + '/artist/search', {
+      params: {
+        keyword: keyword,
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        console.log(res.data);
+        byArtist = res.data.value;
+      } else {
+        self.props.history.push('/500')
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await this.setState({
+      ...this.state,
+      byArtist: byArtist,
+      byTrack: byTrack
+    });
+
+
+  }
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        ...this.state,
+        activeTab: tab,
+      });
+    }
+  }
+
+  handleCallApi = async () => {
+    const self = this;
+    const urlCurrent = window.location.href.split('=');
+    var keyword = urlCurrent[urlCurrent.length - 1];
+
+    if (keyword.includes("#")){
+    var lastIndex = keyword.lastIndexOf("#");
+    keyword = keyword.substring(0, lastIndex);
+    }
+    console.log(keyword);
+    var byTrack = [], byArtist = [];
+    await axios.get(_url + '/track/search-api-title', {
+      params: {
+        title: keyword,
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        console.log(res);
+        byTrack = res.data.value;
+      } else {
+        console.log(res);
+        self.props.history.push('/500');
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await axios.get(_url + '/artist/search-api', {
+      params: {
+        name: keyword,
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        byArtist = res.data.value;
+      } else {
+        self.props.history.push('/500');
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await this.setState({
+      ...this.state,
+      byArtist: byArtist,
+      byTrack: byTrack
+    });
+
+  }
+
+
+  handleClickTrack(id) {
+    this.props.history.push(`/track/${id}`)
+  }
   render() {
+    const { byTrack, byArtist } = this.state;
     return (
       <div className="animated fadeIn" style={{ marginTop: '20px', marginLeft: '50px', marginRight: '50px' }}>
-        <ListGroupItem>
-          <Row>
-            <Col xs="2" sm="2" style={{ display: 'flex' }}>
-              <img src={musicimg} style={{ width: '100%', height: '100px' }} />
-            </Col>
-            <Col xs="7" sm="7">
-              <Row>
-                <h1 style={{ fontSize: '20px' }}>Love me like you do</h1></Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '15px' }}>Selena Gomes</span>
-              </Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Thể loại: </span>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Dance, Rock</span>
-              </Row>
-            </Col>
-            <Col xs="3" sm="3">
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt nghe: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ marginTop: '5px', paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt like: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row style={{ marginTop: '10px' }}>
-                <Col>
-                  <i className="icon-playlist icons font-lg float-right"></i>
-                  <i className="icon-cloud-download icons font-lg float-right" style={{ marginRight: '10px' }} ></i>
-                  <i className="icon-heart icons font-lg float-right" style={{ marginRight: '10px' }}></i>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </ListGroupItem>
+        <Alert color="primary">
+          This is a primary alert with <a onClick={this.handleCallApi} href="#" className="alert-link">an example link</a>. Give it a click if you like.
+                </Alert>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === 'track' })}
+              onClick={() => { this.toggle('track'); }}
+            >
+              Track
+                </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === 'artist' })}
+              onClick={() => { this.toggle('artist'); }}
+            >
+              Artist
+                </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="track">
+            {byTrack.map((e) => {
+              return <ListGroupItem key={e.id} onClick={() => {
+                this.handleClickTrack(e.id);
+              }}>
+                <Row>
+                  <Col xs="2" sm="2" style={{ display: 'flex' }}>
+                    <img src={e.track_imageurl} style={{ width: '100%', height: '100px' }} />
+                  </Col>
+                  <Col xs="7" sm="7">
+                    <Row>
+                      <h1 style={{ fontSize: '20px' }}>{e.title}</h1></Row>
+                    <Row style={{ marginTop: '5px' }}>
+                      <span style={{ fontSize: '15px' }}>{e.artist}</span>
+                    </Row>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            })}
 
-        <ListGroupItem>
-          <Row>
-            <Col xs="2" sm="2" style={{ display: 'flex' }}>
-              <img src={musicimg} style={{ width: '100%', height: '100px' }} />
-            </Col>
-            <Col xs="7" sm="7">
-              <Row>
-                <h1 style={{ fontSize: '20px' }}>Love me like you do</h1></Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '15px' }}>Selena Gomes</span>
-              </Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Thể loại: </span>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Dance, Rock</span>
-              </Row>
-            </Col>
-            <Col xs="3" sm="3">
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt nghe: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ marginTop: '5px', paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt like: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row style={{ marginTop: '10px' }}>
-                <Col>
-                  <i className="icon-playlist icons font-lg float-right"></i>
-                  <i className="icon-cloud-download icons font-lg float-right" style={{ marginRight: '10px' }} ></i>
-                  <i className="icon-heart icons font-lg float-right" style={{ marginRight: '10px' }}></i>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </ListGroupItem>
+          </TabPane>
+          <TabPane tabId="artist">
+          {byArtist.map((e) => {
+              return <ListGroupItem key={e.id}>
+                <Row>
+                  <Col xs="2" sm="2" style={{ display: 'flex' }}>
+                    <img src={e.imageurl} style={{ width: '100%', height: '100px' }} />
+                  </Col>
+                  <Col xs="7" sm="7" style={{margin: 'auto 0'}}>
+                    <Row>
+                      <h1 style={{ fontSize: '20px' }}>{e.name}</h1></Row>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            })}
+              </TabPane>
+        </TabContent>
 
-        <ListGroupItem>
-          <Row>
-            <Col xs="2" sm="2" style={{ display: 'flex' }}>
-              <img src={musicimg} style={{ width: '100%', height: '100px' }} />
-            </Col>
-            <Col xs="7" sm="7">
-              <Row>
-                <h1 style={{ fontSize: '20px' }}>Love me like you do</h1></Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '15px' }}>Selena Gomes</span>
-              </Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Thể loại: </span>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Dance, Rock</span>
-              </Row>
-            </Col>
-            <Col xs="3" sm="3">
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt nghe: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ marginTop: '5px', paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt like: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row style={{ marginTop: '10px' }}>
-                <Col>
-                  <i className="icon-playlist icons font-lg float-right"></i>
-                  <i className="icon-cloud-download icons font-lg float-right" style={{ marginRight: '10px' }} ></i>
-                  <i className="icon-heart icons font-lg float-right" style={{ marginRight: '10px' }}></i>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </ListGroupItem>
 
-        <ListGroupItem>
-          <Row>
-            <Col xs="2" sm="2" style={{ display: 'flex' }}>
-              <img src={musicimg} style={{ width: '100%', height: '100px' }} />
-            </Col>
-            <Col xs="7" sm="7">
-              <Row>
-                <h1 style={{ fontSize: '20px' }}>Love me like you do</h1></Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '15px' }}>Selena Gomes</span>
-              </Row>
-              <Row style={{ marginTop: '5px' }}>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Thể loại: </span>
-                <span style={{ fontSize: '13px', color: '#8f9ba6' }}>Dance, Rock</span>
-              </Row>
-            </Col>
-            <Col xs="3" sm="3">
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt nghe: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className='border border-secondary rounded float-right' style={{ marginTop: '5px', paddingLeft: '7px', paddingRight: '7px', paddingTop: '3px', paddingBottom: '3px' }}>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>Lượt like: </span>
-                    <span style={{ fontSize: '12px', color: '#8f9ba6' }}>1.253.369</span>
-                  </div>
-                </Col>
-              </Row>
-              <Row style={{ marginTop: '10px' }}>
-                <Col>
-                  <i className="icon-playlist icons font-lg float-right"></i>
-                  <i className="icon-cloud-download icons font-lg float-right" style={{ marginRight: '10px' }} ></i>
-                  <i className="icon-heart icons font-lg float-right" style={{ marginRight: '10px' }}></i>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </ListGroupItem>
       </div>
     );
   }
