@@ -126,6 +126,10 @@ class SearchLayout extends Component {
   handleClickTrack(id) {
     this.props.history.push(`/track/${id}`)
   }
+
+  handleClickArtist(id) {
+    this.props.history.push(`/artist/${id}`)
+  }
   render() {
     const { byTrack, byArtist } = this.state;
     return (
@@ -175,7 +179,9 @@ class SearchLayout extends Component {
           </TabPane>
           <TabPane tabId="artist">
           {byArtist.map((e) => {
-              return <ListGroupItem key={e.id}>
+              return <ListGroupItem key={e.id} onClick={() => {
+                this.handleClickArtist(e.id);
+              }}>
                 <Row>
                   <Col xs="2" sm="2" style={{ display: 'flex' }}>
                     <img src={e.imageurl} style={{ width: '100%', height: '100px' }} />

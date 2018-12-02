@@ -7,7 +7,8 @@ URL.REGISTER = '/register';
 URL.TRACK = '/track';
 URL.CHART = '/chart';
 URL.PROFILE = '/profile'
-
+URL.ARTIST = '/artist'
+URL.SEARCH = '/search'
 
 
 export default URL;

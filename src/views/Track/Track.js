@@ -292,25 +292,25 @@ class Track extends Component {
                 </CardHeader>
                 <CardBody style={{ height: '100%' }}>
                   <div className="text-center">Speechiness</div>
-                  <Progress value={trackVal.trackFeatures.speechiness * 100}>{trackVal.trackFeatures.speechiness * 100}%</Progress>
+                  <Progress  value={trackVal.trackFeatures.speechiness * 100}>{trackVal.trackFeatures.speechiness * 100}%</Progress>
                   <br />
                   <div className="text-center">Acousticness</div>
-                  <Progress value={trackVal.trackFeatures.acousticness * 100}>{trackVal.trackFeatures.acousticness * 100}% </Progress>
+                  <Progress  value={trackVal.trackFeatures.acousticness * 100}>{trackVal.trackFeatures.acousticness * 100}% </Progress>
                   <br />
                   <div className="text-center">Instrumentalness</div>
-                  <Progress value={trackVal.trackFeatures.instrumentalness * 100}>{trackVal.trackFeatures.instrumentalness * 100}% </Progress>
+                  <Progress  value={trackVal.trackFeatures.instrumentalness * 100}>{trackVal.trackFeatures.instrumentalness * 100}% </Progress>
                   <br />
                   <div className="text-center">Valence</div>
-                  <Progress value={trackVal.trackFeatures.valence * 100}>{trackVal.trackFeatures.valence * 100}% </Progress>
+                  <Progress  value={trackVal.trackFeatures.valence * 100}>{trackVal.trackFeatures.valence * 100}% </Progress>
                   <br />
                   <div className="text-center">Liveness</div>
-                  <Progress value={trackVal.trackFeatures.liveness * 100}>{trackVal.trackFeatures.liveness * 100}% </Progress>
+                  <Progress  value={trackVal.trackFeatures.liveness * 100}>{trackVal.trackFeatures.liveness * 100}% </Progress>
                   <br />
                   <div className="text-center">Energy</div>
                   <Progress value={trackVal.trackFeatures.energy * 100}>{trackVal.trackFeatures.energy * 100}% </Progress>
                   <br />
                   <div className="text-center">Danceability</div>
-                  <Progress value={trackVal.trackFeatures.danceability * 100}>{trackVal.trackFeatures.danceability * 100}% </Progress>
+                  <Progress  value={trackVal.trackFeatures.danceability * 100}>{trackVal.trackFeatures.danceability * 100}% </Progress>
                   <br />
                 </CardBody>
               </Card>

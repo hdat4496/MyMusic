@@ -4,13 +4,14 @@ import Track from './Track';
 import Profile from './Profile';
 import Chart from './Chart';
 import Home from './Home';
+import Artist from './Artist';
 import SearchLayout from './SearchLayout';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Login, Page404, Page500, Register, PageMain } from './Pages';
 import Widgets from './Widgets';
 
 export {
-  Profile,
+  Artist,
   Track,
   Chart,
   Home,
