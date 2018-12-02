@@ -72,7 +72,8 @@ class Track extends Component {
 
   state = {
     trackVal: '',
-    userFavorite: false
+    userFavorite: false,
+    likeNumber: 0
   };
 
   componentDidMount = async () => {
@@ -88,7 +89,8 @@ class Track extends Component {
         console.log(res.data);
         self.setState({
           ...self.state,
-          trackVal: res.data.value
+          trackVal: res.data.value,
+          likeNumber: res.data.value.trackInfo.like
         })
       } else {
         self.props.history.push('/404')
@@ -145,9 +147,16 @@ class Track extends Component {
       }
     }).then(function (res) {
       if (res.data.status === 200) {
+        var likeNumber =  self.state.likeNumber
+        if(self.state.userFavorite){
+          likeNumber -= 1;
+        } else {
+          likeNumber += 1;
+        }
           self.setState({
             ...self.state,
-            userFavorite: !self.state.userFavorite
+            userFavorite: !self.state.userFavorite,
+            likeNumber: likeNumber
           })
       } else {
         self.props.history.push('/404')
@@ -159,7 +168,7 @@ class Track extends Component {
       });
   }
   render() {
-    const { trackVal, userFavorite } = this.state;
+    var  { trackVal, userFavorite, likeNumber } = this.state; 
     var starColor = 'black';
     if(userFavorite){
       starColor='yellow';
@@ -215,7 +224,7 @@ class Track extends Component {
                       <p style={{ fontSize: '35px' }}>{trackVal.trackInfo.artist}</p>
                       <br />
                       {this.props.auth.token.length > 0 ? <i style={{ color: starColor }} onClick={this.handleLike} className="icon-star icons font-2xl"></i> : ''}
-                      <i style={{ color: '#a1a2af', float: 'right' }}>Lượt xem: {trackVal.trackInfo.listen} | Lượt quan tâm:  {trackVal.trackInfo.like} </i>
+                      <i style={{ color: '#a1a2af', float: 'right' }}>Lượt xem: {trackVal.trackInfo.listen} | Lượt quan tâm:  {likeNumber} </i>
 
                     </Col>
                     <audio controls style={{ width: '90%', margin: 'auto' }}>

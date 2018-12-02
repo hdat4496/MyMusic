@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Pie, Line } from 'react-chartjs-2';
-import { ListGroup, ListGroupItem, Col, Row, Nav, NavItem, NavLink, TabContent, TabPane, Alert } from 'reactstrap';
-import musicimg from '../../assets/img/brand/music.jpg'
+import {  ListGroupItem, Col, Row, Nav, NavItem, NavLink, TabContent, TabPane, Alert } from 'reactstrap';
 import axios from 'axios';
 import classnames from 'classnames';
 //========================//=====================
