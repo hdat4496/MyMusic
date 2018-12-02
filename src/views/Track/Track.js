@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Pie, Line } from 'react-chartjs-2';
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
-import musicimg from '../../assets/img/brand/music.jpg'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -168,6 +167,8 @@ class Track extends Component {
       });
   }
   render() {
+    var numberCover = Math.floor(Math.random()*(49)+1);
+    var coverImg = `/assets/img/cover/cover_image_${numberCover}.jpg`;
     var  { trackVal, userFavorite, likeNumber } = this.state; 
     var starColor = 'black';
     if(userFavorite){
@@ -199,7 +200,7 @@ class Track extends Component {
               <div style={{ position: 'relative', display: 'block' }}>
                 <img className='img-thumbnail img-avatar' src={trackVal.trackInfo.artist_imageurl}
                   style={{ width: '200px', height: '200px', position: 'absolute', bottom: '10%', left: '3%' }} />
-                <img style={{ width: '100%', height: '270px' }} src={musicimg} alt="Music" />
+                <img style={{ width: '100%', height: '270px' }} src={coverImg} alt="Music" />
               </div>
               <Card>
                 <CardBody style={{ fontSize: '20px', padding: '0,8rem' }}>

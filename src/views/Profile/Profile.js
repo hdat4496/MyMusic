@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
-import musicimg from '../../assets/img/brand/music.jpg';
 import artistimg from '../../assets/img/brand/avatar.jpg';
 import axios from 'axios';
 const _url = 'http://localhost:10010';
@@ -39,13 +38,13 @@ class Profile extends Component {
   
 
     }
-
-
   }
   handleClickTrack(id) {
     this.props.history.push(`/track/${id}`)
   }
   render() {
+    var numberCover = Math.floor(Math.random()*(49)+1);
+    var coverImg = `/assets/img/cover/cover_image_${numberCover}.jpg`;
     const {favoriteTrack} = this.state;
     return (
       <div className="animated fadeIn">
@@ -57,8 +56,7 @@ class Profile extends Component {
                  style={{ height: '75%' }} />
                 <p style={{ marginLeft: '30px', color: 'white', fontSize: '25px' }}>Huỳnh Duy Anh Toàn</p>
               </div>
-
-              <img style={{ width: '100%', height: '370px' }} src={musicimg} alt="Music" />
+              <img style={{ width: '100%', height: '370px' }} src={coverImg} alt="Music" />
             </div>
           </Col>
         </Row>
