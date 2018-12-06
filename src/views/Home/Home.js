@@ -41,14 +41,7 @@ const options = {
   maintainAspectRatio: false
 }
 
-
-
-
-
 class Home extends Component {
-  // state = {
-
-  // };
   constructor(props) {
     super(props);
     this.state = {

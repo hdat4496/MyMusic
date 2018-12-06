@@ -12,7 +12,8 @@ import {
   Button,
   Label,
   Input,
-  Form
+  Form,
+  Tooltip
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
@@ -77,8 +78,27 @@ class Chart extends Component {
       chartVal: '',
       dateStart: '',
       dateEnd: '',
-      genre: 0
-
+      genre: 0,
+      // tooltipOpen: false,
+      tooltipOpen: [false, false, false, false, false, false, false, false, false, false, false, false],
+      tooltips: [
+        {
+          placement: 'top',
+          text: 'Top',
+        },
+        {
+          placement: 'bottom',
+          text: 'Bottom',
+        },
+        {
+          placement: 'left',
+          text: 'Left',
+        },
+        {
+          placement: 'right',
+          text: 'Right',
+        },
+      ]
     };
   }
 
@@ -143,9 +163,14 @@ class Chart extends Component {
 
 
 
-  toggle() {
+  toggle(i) {
+    const newArray = this.state.tooltipOpen.map((element, index) => {
+      return (index === i ? !element : false);
+    });
+
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
+      tooltipOpen: newArray,
     });
   }
 
@@ -481,7 +506,7 @@ class Chart extends Component {
               <Row>
                 <Col xs="12">
                   <Card style={{ width: '100%' }}>
-                    <CardHeader>
+                    <CardHeader id="mode">
                       Mode
                     </CardHeader>
                     <CardBody>
@@ -496,8 +521,9 @@ class Chart extends Component {
                 <Col>
 
                   <Card style={{ width: '100%', marginTop: '20px' }}>
-                    <CardHeader>
+                    <CardHeader id='time-signature'>
                       Time signature
+
                     </CardHeader>
                     <CardBody >
                       <div className="chart-wrapper" >
@@ -525,17 +551,19 @@ class Chart extends Component {
                 </CardBody>
                 <CardFooter >
                   <Row className="text-center">
-                    <Col sm={12} md className="mb-sm-2 mb-0">
+                    <Col id="acousticness" sm={12} md className="mb-sm-2 mb-0">
                       <strong>Acousticness</strong>
                       <Progress className="progress-xs mt-2" color="success" value="100" />
                     </Col>
-                    <Col sm={12} md className="mb-sm-2 mb-0 d-md-down-none">
+                    <Col id="danceability" sm={12} md className="mb-sm-2 mb-0 d-md-down-none">
                       <strong>Danceability</strong>
                       <Progress className="progress-xs mt-2" color="info" value="100" />
+
                     </Col>
-                    <Col sm={12} md className="mb-sm-2 mb-0">
+                    <Col id="energy" sm={12} md className="mb-sm-2 mb-0">
                       <strong>Energy</strong>
                       <Progress className="progress-xs mt-2" color="danger" value="100" />
+
                     </Col>
                   </Row>
                 </CardFooter>
@@ -546,22 +574,20 @@ class Chart extends Component {
           <Row>
             <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
               <Card style={{ width: '100%' }}>
-                <CardHeader>
+                <CardHeader id='key'>
                   Key
                 </CardHeader>
                 <CardBody style={{ height: '100%' }}>
-
                   <div className="chart-wrapper">
                     <Pie data={chart_key_data} />
                   </div>
-
                 </CardBody>
               </Card>
             </Col>
 
             <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
               <Card style={{ width: '100%' }}>
-                <CardHeader>
+                <CardHeader id="tempo">
                   Tempo
                 </CardHeader>
                 <CardBody>
@@ -573,7 +599,7 @@ class Chart extends Component {
             </Col>
             <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
               <Card style={{ width: '100%' }}>
-                <CardHeader>
+                <CardHeader id="vocality">
                   Vocality
                 </CardHeader>
                 <CardBody>
@@ -587,7 +613,7 @@ class Chart extends Component {
           <Row>
             <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
               <Card style={{ width: '100%' }}>
-                <CardHeader>
+                <CardHeader id="duration">
                   Duration
                 </CardHeader>
                 <CardBody>
@@ -600,7 +626,7 @@ class Chart extends Component {
 
             <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
               <Card style={{ width: '100%' }}>
-                <CardHeader>
+                <CardHeader id="valence">
                   Valence
                 </CardHeader>
                 <CardBody>
@@ -612,7 +638,7 @@ class Chart extends Component {
             </Col>
             <Col xs="4" sm="4" style={{ margin: '10px auto', display: 'flex' }}>
               <Card style={{ width: '100%' }}>
-                <CardHeader>
+                <CardHeader id="loudness">
                   Loudness
                 </CardHeader>
                 <CardBody>
@@ -623,6 +649,40 @@ class Chart extends Component {
               </Card>
             </Col>
           </Row>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[0]} autohide={false} target="mode" toggle={() => { this.toggle(0); }}>
+            Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived.
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[1]} autohide={false} target="time-signature" toggle={() => { this.toggle(1); }}>
+            An estimated overall time signature of a track. The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure).
+            </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[2]} autohide={false} target="acousticness" toggle={() => { this.toggle(2); }}>
+            A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[3]} autohide={false} target="danceability" toggle={() => { this.toggle(3); }}>
+            Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[4]} autohide={false} target="energy" toggle={() => { this.toggle(4); }}>
+            Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy.
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[5]} autohide={false} target="key" toggle={() => { this.toggle(5); }}>
+            The estimated overall key of the track follow Pitch Class notation (https://en.wikipedia.org/wiki/Pitch_class)
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[6]} autohide={false} target="tempo" toggle={() => { this.toggle(6); }}>
+            The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[7]} autohide={false} target="vocality" toggle={() => { this.toggle(7); }}>
+            <strong>Speechiness</strong>: Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks. <br/>
+            <strong>Instrumentalness</strong>: Predicts whether a track contains no vocals. “Ooh” and “aah” sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly “vocal”. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0. 
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[8]} autohide={false} target="duration" toggle={() => { this.toggle(8); }}>
+            The duration of the track in milliseconds
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[9]} autohide={false} target="valence" toggle={() => { this.toggle(9); }}>
+          A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry). 
+          </Tooltip>
+          <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[10]} autohide={false} target="loudness" toggle={() => { this.toggle(10); }}>
+          The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values typical range between -60 and 0 db. 
+          </Tooltip>
         </div>
       );
 
