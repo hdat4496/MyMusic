@@ -187,8 +187,11 @@ class SearchLayout extends Component {
                     <img src={e.imageurl} style={{ width: '100%', height: '100px' }} />
                   </Col>
                   <Col xs="7" sm="7" style={{margin: 'auto 0'}}>
-                    <Row>
+                      <Row>
                       <h1 style={{ fontSize: '20px' }}>{e.name}</h1></Row>
+                    <Row style={{ marginTop: '5px' }}>
+                      <span style={{ fontSize: '15px' }}>{e.genre}</span>
+                    </Row>
                   </Col>
                 </Row>
               </ListGroupItem>

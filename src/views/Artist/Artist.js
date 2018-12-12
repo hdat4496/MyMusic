@@ -8,7 +8,7 @@ class Artist extends Component {
   state = {
     artistVal: ''
   }
-  componentDidMount(){
+  componentDidMount() {
     const urlCurrent = window.location.href.split('/');
     const id = urlCurrent[urlCurrent.length - 1] == '' ? urlCurrent[urlCurrent.length - 2] : urlCurrent[urlCurrent.length - 1];
     var self = this;
@@ -31,66 +31,71 @@ class Artist extends Component {
       .catch(function (error) {
         console.log(error);
       });
-  
 
-    }
-  
-    handleClickTrack(id) {
-      this.props.history.push(`/track/${id}`)
-    }
-  
+
+  }
+
+  handleClickTrack(id) {
+    this.props.history.push(`/track/${id}`)
+  }
+
   render() {
-    var numberCover = Math.floor(Math.random()*(49)+1);
+    var numberCover = Math.floor(Math.random() * (49) + 1);
     var coverImg = `/assets/img/cover/cover_image_${numberCover}.jpg`;
-    const {artistVal} = this.state;
-    if(artistVal){return (
-      <div className="animated fadeIn">
-        <Row style={{ marginTop: '20px' }} >
-          <Col xs="12" sm="12" >
-            <div style={{ position: 'relative', display: 'block' }}>
-              <div style={{position: 'absolute', height:'100%', margin:'30px'}}>
-                <img className='img-thumbnail img-avatar' src={artistVal.info.imageurl}
-                 style={{ height: '75%' }} />
-                <p style={{ marginLeft: '30px', color: 'white', fontSize: '25px' }}>{artistVal.info.name}</p>
+    const { artistVal } = this.state;
+    if (artistVal) {
+      return (
+        <div className="animated fadeIn">
+          <Row style={{ marginTop: '20px' }} >
+            <Col xs="12" sm="12" >
+              <div style={{ position: 'relative', display: 'block' }}>
+                <div style={{ position: 'absolute', height: '100%', margin: '50px 0 20px 30px' }}>
+                  <img className='img-thumbnail img-avatar' src={artistVal.info.imageurl}
+                    style={{ height: '75%' }} />
+                  <div style={{ display: 'inline-block', position: 'absolute', marginTop: '100px', width: '1000px'  }}>
+                    <div style={{ marginLeft: '30px', color: 'white', fontSize: '35px' }}>{artistVal.info.name}</div>
+                    <div style={{ marginLeft: '30px', color: 'white', fontSize: '25px' }}>{artistVal.info.genre}</div>
+                    </div>
+                </div>
+                <img style={{ width: '100%', height: '370px' }} src={coverImg} alt="Music" />
               </div>
-              <img style={{ width: '100%', height: '370px' }} src={coverImg} alt="Music" />
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
-            <Card style={{ width: '100%' }}>
-            <CardHeader>
-              Tracks
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
+              <Card style={{ width: '100%' }}>
+                <CardHeader>
+                  Tracks
             </CardHeader>
-            <CardBody>
-            {artistVal.tracks.map((e) => {
-              return <ListGroupItem key={e.id} onClick={() => {
-                this.handleClickTrack(e.id);
-              }}>
-                <Row>
-                  <Col xs="2" sm="2" style={{ display: 'flex' }}>
-                    <img src={e.track_imageurl} style={{ width: '100%', height: '100px' }} />
-                  </Col>
-                  <Col xs="7" sm="7">
-                    <Row>
-                      <h1 style={{ fontSize: '20px' }}>{e.title}</h1></Row>
-                    <Row style={{ marginTop: '5px' }}>
-                      <span style={{ fontSize: '15px' }}>{e.artist}</span>
-                    </Row>
-                  </Col>
-                </Row>
-              </ListGroupItem>
-            })}
-            </CardBody>
-            </Card>
-          </Col>
+                <CardBody>
+                  {artistVal.tracks.map((e) => {
+                    return <ListGroupItem key={e.id} onClick={() => {
+                      this.handleClickTrack(e.id);
+                    }}>
+                      <Row>
+                        <Col xs="2" sm="2" style={{ display: 'flex' }}>
+                          <img src={e.track_imageurl} style={{ width: '100%', height: '100px' }} />
+                        </Col>
+                        <Col xs="7" sm="7">
+                          <Row>
+                            <h1 style={{ fontSize: '20px' }}>{e.title}</h1></Row>
+                          <Row style={{ marginTop: '5px' }}>
+                            <span style={{ fontSize: '15px' }}>{e.artist}</span>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                  })}
+                </CardBody>
+              </Card>
+            </Col>
 
 
-        </Row>
-      </div>
-    );} else {return '';}
-    
+          </Row>
+        </div>
+      );
+    } else { return ''; }
+
   }
 }
 

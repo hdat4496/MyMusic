@@ -7,12 +7,13 @@ import {
   Col,
   Row,
   Jumbotron,
-  Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
+  // Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Line } from 'react-chartjs-2';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 //=============================//===================
 const _url = 'http://localhost:10010';
 const items = [
@@ -48,9 +49,6 @@ class Home extends Component {
       activeIndex: 0,
       expanded: false,
       homeTrack: [],
-      homeChartVal: '',
-      chartLabel : [],
-      chartData : []
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -80,26 +78,6 @@ class Home extends Component {
         console.log(error);
       });
 
-
-    await axios.get(_url + '/chart/get-report-home', {
-      params: {
-        key: this.props.auth.token
-      }
-    }).then(function (res) {
-      if (res.data.status === 200) {
-        self.setState({
-          ...self.state,
-          homeChartVal: res.data.value,
-        });
-        console.log(res.data)
-      } else {
-        console.log(res.data.message);
-      }
-
-    })
-      .catch(function (error) {
-        console.log(error);
-      });
   }
 
   onExiting() {
@@ -135,196 +113,156 @@ class Home extends Component {
     this.props.history.push(`/track/${id}`)
   }
   render() {
-    const { homeTrack, activeIndex, homeChartVal } = this.state;
+    const { homeTrack, activeIndex } = this.state;
     const homeTrack_1 = homeTrack.slice(0, 4);
     const homeTrack_2 = homeTrack.slice(4);
-    const slides = items.map((item) => {
-      return (
-        <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src}>
-          <img className="d-block w-100" src={item.src} alt={item.altText} />
-        </CarouselItem>
-      );
-    });
+    return (
+      <div className="animated fadeIn">
+        <Row>
+          <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
+            <Card style={{ width: '100%' }}>
+              <CardBody>
+                <Row>
+                  <Col xs="5" sm="5" style={{ display: 'flex' }}>
+                    <Jumbotron style={{ marginBottom: '0px', paddingTop: '50px', paddingBottom: "50px" }}>
+                      <h1 style={{ fontSize: '70px' }}>Music trend</h1>
+                      <h1 >in your hand</h1>
+                      <p className="lead">Present many music feature of hit songs and predict if a song will be a hit vernus. That's so awesome!</p>
+                      <Row style={{ marginTop: '30px auto' }}>
+                        <Col xs="5" sm="3">
+                          <Button block color="primary" onClick={() => {
+                            this.props.history.push('/chart');
+                          }} className="btn-pill">Let's start</Button>
+                        </Col>
+                        <Col xs="5" sm="3">
+                          {this.props.auth.token.length == 0 ? <Button block outline color="primary" className="btn-pill" onClick={() => {
+                            this.props.history.push('/login');
+                          }}> Sign in</Button> : ''}
 
-    const slides2 = items.map((item) => {
-      return (
-        <CarouselItem
-          onExiting={this.onExiting}
-          onExited={this.onExited}
-          key={item.src}
-        >
-          <img className="d-block w-100" src={item.src} alt={item.altText} />
-          <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
-        </CarouselItem>
-      );
-    });
-
-    if(homeChartVal){
-      const line = {
-        labels: homeChartVal.data.label,
-        datasets: [
-          {
-            label: homeChartVal.featureName,
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: homeChartVal.data.data,
-          },
-        ],
-      };
-
-      return (
-        <div className="animated fadeIn">
-          <Row>
-            <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
-              <Card style={{ width: '100%' }}>
-                <CardBody>
-                  <Row>
-                    <Col xs="6" sm="6" style={{ display: 'flex' }}>
-                      <Jumbotron style={{ marginBottom: '0px', paddingTop: '50px', paddingBottom: "50px" }}>
-                        <h1 style={{ fontSize: '70px' }}>Music trend</h1>
-                        <h1 >in your hand</h1>
-                        <p className="lead">Present many music feature of hit songs and predict if a song will be a hit vernus. That's so awesome!</p>
-                        <Row style={{ marginTop: '30px auto' }}>
-                          <Col xs="5" sm="3">
-                            <Button block color="primary" onClick={() => {
-                              this.props.history.push('/chart');
-                            }} className="btn-pill">Let's start</Button>
-                          </Col>
-                          <Col xs="5" sm="3">
-                            {this.props.auth.token.length == 0 ? <Button block outline color="primary" className="btn-pill" onClick={() => {
-                              this.props.history.push('/login');
-                            }}> Sign in</Button> : ''}
-  
-                          </Col>
-                        </Row>
-                      </Jumbotron>
-                    </Col>
-                    <Col xs="6" sm="6" style={{ display: 'flex' }}>
-                      <Card style={{ width: '100%', marginBottom: '0px' }}>
-                        <CardBody>
-                          {homeChartVal.genreName}
-                          <div className="chart-wrapper">
-                            
-                            <Line data={line} options={options} />
-                          </div>
+                        </Col>
+                      </Row>
+                    </Jumbotron>
+                  </Col>
+                  <Col xs="7" sm="7" style={{ display: 'flex' }}>
+                    <Card style={{ width: '100%', marginBottom: '0px', }}>
+                      <CardBody>
+                        <Carousel autoPlay showStatus={false} infiniteLoop={true} width={'100%'}  >
+                          {homeTrack_1.map((e, i) => {
+                            return <div key={e}>
+                              <img style={{ maxHeight: "400px" }} src={e.track_imageurl} />
+                              <p className="legend"><p style={{fontSize:'30px'}}>{e.title}</p>
+                                {e.artist}</p>
+                            </div>
+                          })}
+                          {homeTrack_2.map((e, i) => {
+                            return <div key={e}>
+                              <img style={{ maxHeight: "400px" }} src={e.track_imageurl} />
+                              <p className="legend"><p style={{fontSize:'30px'}}>{e.title}</p>
+                                {e.artist}</p>
+                            </div>
+                          })}
+                        </Carousel>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col className='list-audio' xs="12" sm="12">
+            <Card style={{ width: '100%' }}>
+              <CardBody>
+                <Row>
+                  {homeTrack_1.map((e, i) => {
+                    return <Col key={e.id} xs="3" sm="3" className='audio-item'>
+                      <Card style={{ width: '100%' }} onClick={() => {
+                        this.handleClickTrack(e.id);
+                      }} >
+                        <CardHeader className='audio-item-header'>
+                          <img style={{ width: '100%' }} src={e.track_imageurl} alt="Music" />
+                        </CardHeader>
+                        <CardBody className='audio-item-body'>
+                          <Row>
+                            <Col xs="3" sm="3" className='audio-item-body-avatar'>
+                              <img src={e.artist_imageurl} className="img-avatar" alt="avatar" />
+                            </Col>
+                            <Col xs="9" sm="9" className='audio-item-body-info' >
+                              <div style={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                maxWidth: '90%',
+                                whiteSpace: 'nowrap'
+                              }}>
+                                <span>
+                                  <b>{e.title}</b>
+                                </span>
+                                <br />
+                                <span>
+                                  {e.artist}
+                                </span>
+                              </div>
+                            </Col>
+                          </Row>
                         </CardBody>
                       </Card>
                     </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col className='list-audio' xs="12" sm="12">
-              <Card style={{ width: '100%' }}>
-                <CardBody>
-                  <Row>
-                    {homeTrack_1.map((e, i) => {
-                      return <Col key={e.id} xs="3" sm="3" className='audio-item'>
-                        <Card style={{ width: '100%' }} onClick={() => {
-                          this.handleClickTrack(e.id);
-                        }} >
-                          <CardHeader className='audio-item-header'>
-                            <img style={{ width: '100%' }} src={e.track_imageurl} alt="Music" />
-                          </CardHeader>
-                          <CardBody className='audio-item-body'>
-                            <Row>
-                              <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                                <img src={e.artist_imageurl} className="img-avatar" alt="avatar" />
-                              </Col>
-                              <Col xs="9" sm="9" className='audio-item-body-info' >
-                                <div style={{
-                                      textOverflow: 'ellipsis',
-                                      overflow: 'hidden',
-                                      maxWidth: '90%',
-                                      whiteSpace: 'nowrap'
-                                }}>
-                                  <span>
-                                    <b>{e.title}</b>
-                                  </span>
-                                  <br />
-                                  <span>
-                                    {e.artist}
-                                  </span>
-                                </div>
-                              </Col>
-                            </Row>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    })}
-                    {homeTrack_2.map((e, i) => {
-                      return <Col key={e.id} xs="3" sm="3" className='audio-item'>
-                        <Card style={{ width: '100%' }} onClick={() => {
-                          this.handleClickTrack(e.id);
-                        }}>
-                          <CardHeader className='audio-item-header'>
-                            <img style={{ width: '100%' }} src={e.track_imageurl} alt="Music" />
-                          </CardHeader>
-                          <CardBody className='audio-item-body'>
-                            <Row>
-                              <Col xs="3" sm="3" className='audio-item-body-avatar'>
-                                <img src={e.artist_imageurl} className="img-avatar" alt="avatar" />
-                              </Col>
-                              <Col xs="9" sm="9" className='audio-item-body-info' >
-                                <div>
-                                  <span>
-                                    <b>{e.title}</b>
-                                  </span>
-                                  <br />
-                                  <span>
-                                    {e.artist}
-                                  </span>
-                                </div>
-                              </Col>
-                            </Row>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    })}
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
-              <Card style={{ width: '100%' }}>
-                <CardBody>
-                  <Col xs="12" xl="12">
-                    <Carousel activeIndex={activeIndex} next={this.next} previous={this.previous}>
-                      <CarouselIndicators items={items} activeIndex={1} onClickHandler={this.goToIndex} />
-                      {slides2}
-                      <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-                      <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-                    </Carousel>
-  
-                  </Col>
-  
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      );
-    } else { return '';}
-    
+                  })}
+                  {homeTrack_2.map((e, i) => {
+                    return <Col key={e.id} xs="3" sm="3" className='audio-item'>
+                      <Card style={{ width: '100%' }} onClick={() => {
+                        this.handleClickTrack(e.id);
+                      }}>
+                        <CardHeader className='audio-item-header'>
+                          <img style={{ width: '100%' }} src={e.track_imageurl} alt="Music" />
+                        </CardHeader>
+                        <CardBody className='audio-item-body'>
+                          <Row>
+                            <Col xs="3" sm="3" className='audio-item-body-avatar'>
+                              <img src={e.artist_imageurl} className="img-avatar" alt="avatar" />
+                            </Col>
+                            <Col xs="9" sm="9" className='audio-item-body-info' >
+                              <div style={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                maxWidth: '90%',
+                                whiteSpace: 'nowrap'
+                              }}>
+                                <span>
+                                  <b>{e.title}</b>
+                                </span>
+                                <br />
+                                <span>
+                                  {e.artist}
+                                </span>
+                              </div>
+                            </Col>
+                          </Row>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  })}
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
+            <Card style={{ width: '100%' }}>
+              <CardBody>
+                <Col xs="12" xl="12">
+
+                </Col>
+
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    );
+
   }
 }
 const mapStateToProps = (state) => ({
