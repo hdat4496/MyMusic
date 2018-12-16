@@ -5,13 +5,19 @@
         border-radius: 15px 15px 0 0;
         margin: 10px auto;
         display: flex;
+
         .card{
-            border-radius: 15px;   
+            border-radius: 15px; 
+
+            &:hover{
+                transform: translateY(-5px) translateZ(0);
+                box-shadow: 0 16px 32px 0 rgba(10,16,34,.2), 0 0 0 transparent;
+            }
         }
         .audio-item-header{
             border-radius: 15px 15px 0 0;
             padding: 0;
-            height: 230px;
+            height: 200px;
             img{
                 height: 100%;
                 border-radius: 15px 15px 0 0;

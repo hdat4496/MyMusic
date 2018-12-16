@@ -75,33 +75,35 @@ class Track extends Component {
     likeNumber: 0,
     tooltipOpen: [false, false, false, false, false, false, false, false, false, false, false, false, false, false],
     tooltips: [
-        {
-          placement: 'top',
-          text: 'Top',
-        },
-        {
-          placement: 'bottom',
-          text: 'Bottom',
-        },
-        {
-          placement: 'left',
-          text: 'Left',
-        },
-        {
-          placement: 'right',
-          text: 'Right',
-        },
-      ]
+      {
+        placement: 'top',
+        text: 'Top',
+      },
+      {
+        placement: 'bottom',
+        text: 'Bottom',
+      },
+      {
+        placement: 'left',
+        text: 'Left',
+      },
+      {
+        placement: 'right',
+        text: 'Right',
+      },
+    ]
   };
 
   componentDidMount = async () => {
     const urlCurrent = window.location.href.split('/');
     const id = urlCurrent[urlCurrent.length - 1] == '' ? urlCurrent[urlCurrent.length - 2] : urlCurrent[urlCurrent.length - 1];
     var self = this;
+
+    var paramsGetTrack = this.props.auth.token.length > 0 ? 
+    { id: id, token: this.props.auth.token } : { id: id }
+
     await axios.get(_url + '/track/get-track', {
-      params: {
-        id: id
-      }
+      params: paramsGetTrack
     }).then(function (res) {
       if (res.data.status === 200) {
         self.setState({
@@ -126,7 +128,7 @@ class Track extends Component {
         }
       }).then(function (res) {
         if (res.data.status === 200) {
-          if (res.data.value){
+          if (res.data.value) {
             self.setState({
               ...self.state,
               userFavorite: true
@@ -136,7 +138,7 @@ class Track extends Component {
         } else {
           self.props.history.push('/404')
         }
-  
+
       })
         .catch(function (error) {
           console.log(error);
@@ -151,7 +153,7 @@ class Track extends Component {
 
   }
 
-  handleLike = async () =>{
+  handleLike = async () => {
     var self = this;
     const urlCurrent = window.location.href.split('/');
     const id = urlCurrent[urlCurrent.length - 1] == '' ? urlCurrent[urlCurrent.length - 2] : urlCurrent[urlCurrent.length - 1];
@@ -163,17 +165,17 @@ class Track extends Component {
       }
     }).then(function (res) {
       if (res.data.status === 200) {
-        var likeNumber =  self.state.likeNumber
-        if(self.state.userFavorite){
+        var likeNumber = self.state.likeNumber
+        if (self.state.userFavorite) {
           likeNumber -= 1;
         } else {
           likeNumber += 1;
         }
-          self.setState({
-            ...self.state,
-            userFavorite: !self.state.userFavorite,
-            likeNumber: likeNumber
-          })
+        self.setState({
+          ...self.state,
+          userFavorite: !self.state.userFavorite,
+          likeNumber: likeNumber
+        })
       } else {
         self.props.history.push('/404')
       }
@@ -195,12 +197,12 @@ class Track extends Component {
     });
   }
   render() {
-    var numberCover = Math.floor(Math.random()*(49)+1);
+    var numberCover = Math.floor(Math.random() * (49) + 1);
     var coverImg = `/assets/img/cover/cover_image_${numberCover}.jpg`;
-    var  { trackVal, userFavorite, likeNumber } = this.state; 
+    var { trackVal, userFavorite, likeNumber } = this.state;
     var starColor = '#ddd';
-    if(userFavorite){
-      starColor='yellow';
+    if (userFavorite) {
+      starColor = 'yellow';
     }
     if (trackVal) {
       const pie = {
@@ -252,8 +254,8 @@ class Track extends Component {
                       <p style={{ fontSize: '50px' }}>{trackVal.trackInfo.title}</p>
                       <p style={{ fontSize: '35px' }}>{trackVal.trackInfo.artist}</p>
                       <br />
-                      {this.props.auth.token.length > 0 ? 
-                      <i style={{ color: starColor, fontSize: '40px' }} onClick={this.handleLike} className="fa fa-star"></i> : ''}
+                      {this.props.auth.token.length > 0 ?
+                        <i style={{ color: starColor, fontSize: '40px' }} onClick={this.handleLike} className="fa fa-star"></i> : ''}
                       <i style={{ color: '#a1a2af', float: 'right' }}>Lượt xem: {trackVal.trackInfo.listen} | Lượt quan tâm:  {likeNumber} </i>
 
                     </Col>
@@ -320,28 +322,28 @@ class Track extends Component {
                   Music features
                 </CardHeader>
                 <CardBody style={{ height: '100%' }}>
-                  <ListGroup style={{marginTop: '30px'}}>
-                    <ListGroupItem style={{padding:'20px'}}>
-                      <div id="speechiness" className="text-center">Speechiness</div>
-                      <Progress value={trackVal.trackFeatures.speechiness * 100}>{trackVal.trackFeatures.speechiness * 100}%</Progress></ListGroupItem>
-                    <ListGroupItem style={{padding:'20px'}}>
-                      <div id="acousticness" className="text-center">Acousticness</div>
-                      <Progress value={trackVal.trackFeatures.acousticness * 100}>{trackVal.trackFeatures.acousticness * 100}% </Progress></ListGroupItem>
-                    <ListGroupItem style={{padding:'20px'}}>
-                      <div id="instrumentalness" className="text-center">Instrumentalness</div>
-                      <Progress value={trackVal.trackFeatures.instrumentalness * 100}>{trackVal.trackFeatures.instrumentalness * 100}% </Progress></ListGroupItem>
-                    <ListGroupItem style={{padding:'20px'}}>
-                      <div id="valence" className="text-center">Valence</div>
-                      <Progress value={trackVal.trackFeatures.valence * 100}>{trackVal.trackFeatures.valence * 100}% </Progress></ListGroupItem>
-                    <ListGroupItem style={{padding:'20px'}}>
-                      <div id="liveness" className="text-center">Liveness</div>
-                      <Progress value={trackVal.trackFeatures.liveness * 100}>{trackVal.trackFeatures.liveness * 100}% </Progress>               </ListGroupItem>
-                    <ListGroupItem style={{padding:'20px'}}>
-                      <div id="energy" className="text-center">Energy</div>
-                      <Progress value={trackVal.trackFeatures.energy * 100}>{trackVal.trackFeatures.energy * 100}% </Progress>                </ListGroupItem>
-                    <ListGroupItem style={{padding:'20px'}} >
-                      <div id="danceability" className="text-center">Danceability</div>
-                      <Progress value={trackVal.trackFeatures.danceability * 100}>{trackVal.trackFeatures.danceability * 100}% </Progress>            </ListGroupItem>
+                  <ListGroup style={{ marginTop: '30px' }}>
+                    <ListGroupItem style={{ padding: '20px' }}>
+                      <div id="speechiness" className="text-center">Speechiness ({(trackVal.trackFeatures.speechiness * 100).toFixed(2)}%)</div>
+                      <Progress value={trackVal.trackFeatures.speechiness * 100}></Progress></ListGroupItem>
+                    <ListGroupItem style={{ padding: '20px' }}>
+                      <div id="acousticness" className="text-center">Acousticness ({(trackVal.trackFeatures.acousticness * 100).toFixed(2)}%)</div>
+                      <Progress value={trackVal.trackFeatures.acousticness * 100}></Progress></ListGroupItem>
+                    <ListGroupItem style={{ padding: '20px' }}>
+                      <div id="instrumentalness" className="text-center">Instrumentalness ({(trackVal.trackFeatures.instrumentalness * 100).toFixed(2)} %)</div>
+                      <Progress value={trackVal.trackFeatures.instrumentalness * 100}></Progress></ListGroupItem>
+                    <ListGroupItem style={{ padding: '20px' }}>
+                      <div id="valence" className="text-center">Valence ({(trackVal.trackFeatures.valence * 100).toFixed(2)}%)</div>
+                      <Progress value={trackVal.trackFeatures.valence * 100}></Progress></ListGroupItem>
+                    <ListGroupItem style={{ padding: '20px' }}>
+                      <div id="liveness" className="text-center">Liveness ({(trackVal.trackFeatures.liveness * 100).toFixed(2)} %)</div>
+                      <Progress value={trackVal.trackFeatures.liveness * 100}></Progress></ListGroupItem>
+                    <ListGroupItem style={{ padding: '20px' }}>
+                      <div id="energy" className="text-center">Energy ({(trackVal.trackFeatures.energy * 100).toFixed(2)} %)</div>
+                      <Progress value={trackVal.trackFeatures.energy * 100}></Progress></ListGroupItem>
+                    <ListGroupItem style={{ padding: '20px' }} >
+                      <div id="danceability" className="text-center">Danceability ({(trackVal.trackFeatures.danceability * 100).toFixed(2)} %)</div>
+                      <Progress value={trackVal.trackFeatures.danceability * 100}></Progress></ListGroupItem>
                   </ListGroup>
                 </CardBody>
               </Card>
@@ -449,19 +451,19 @@ class Track extends Component {
             Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks.
           </Tooltip>
           <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[8]} autohide={false} target="instrumentalness" toggle={() => { this.toggle(8); }}>
-            Predicts whether a track contains no vocals. “Ooh” and “aah” sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly “vocal”. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0. 
+            Predicts whether a track contains no vocals. “Ooh” and “aah” sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly “vocal”. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0.
           </Tooltip>
           <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[9]} autohide={false} target="duration" toggle={() => { this.toggle(9); }}>
             The duration of the track in milliseconds
           </Tooltip>
           <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[10]} autohide={false} target="valence" toggle={() => { this.toggle(10); }}>
-          A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry). 
+            A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).
           </Tooltip>
           <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[11]} autohide={false} target="loudness" toggle={() => { this.toggle(11); }}>
-          The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values typical range between -60 and 0 db. 
+            The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values typical range between -60 and 0 db.
           </Tooltip>
           <Tooltip style={{ maxWidth: '400px' }} placement="top" isOpen={this.state.tooltipOpen[12]} autohide={false} target="liveness" toggle={() => { this.toggle(12); }}>
-          Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. A value above 0.8 provides strong likelihood that the track is live.
+            Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. A value above 0.8 provides strong likelihood that the track is live.
           </Tooltip>
 
         </div>

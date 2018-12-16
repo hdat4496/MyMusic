@@ -9,6 +9,7 @@ import {
   Jumbotron,
   // Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem
 } from 'reactstrap';
+import { Line } from 'react-chartjs-2';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -49,6 +50,8 @@ class Home extends Component {
       activeIndex: 0,
       expanded: false,
       homeTrack: [],
+      comingHitTrack: [],
+      chartHomeVal: ''
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -59,12 +62,16 @@ class Home extends Component {
 
   componentDidMount = async () => {
     var self = this;
+
+    var token = this.props.auth.token.length > 0 ? this.props.auth.token : '';
+
     await axios.get(_url + '/track/get-home-track', {
       params: {
-        token: this.props.auth.token
+        token: token
       }
     }).then(function (res) {
       if (res.data.status === 200) {
+        console.log(res.data);
         self.setState({
           ...self.state,
           homeTrack: res.data.value
@@ -77,6 +84,46 @@ class Home extends Component {
       .catch(function (error) {
         console.log(error);
       });
+
+    await axios.get(_url + '/track/get-coming-hit-track', {
+      params: {
+        key: ''
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        console.log(res.data);
+        self.setState({
+          ...self.state,
+          comingHitTrack: res.data.value
+        });
+      } else {
+        console.log(res.data.message);
+      }
+
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await axios.get(_url + '/chart/get-report-home', {
+      params: {
+        token: token
+      }
+    }).then(function (res) {
+      if (res.data.status === 200) {
+        self.setState({
+          ...self.state,
+          chartHomeVal: res.data.value
+        });
+        console.log(res.data.value);
+      } else {
+        console.log(res.data.message);
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
 
   }
 
@@ -113,16 +160,73 @@ class Home extends Component {
     this.props.history.push(`/track/${id}`)
   }
   render() {
-    const { homeTrack, activeIndex } = this.state;
+    const { homeTrack, activeIndex, comingHitTrack, chartHomeVal } = this.state;
     const homeTrack_1 = homeTrack.slice(0, 4);
     const homeTrack_2 = homeTrack.slice(4);
+    var first_chart = {}, second_chart = {}
+    if (chartHomeVal) {
+      // Chart
+      first_chart = {
+        labels: chartHomeVal.data[0].label,
+        datasets: [
+          {
+            label: chartHomeVal.data[0].featureName,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: chartHomeVal.data[0].data,
+          },
+        ],
+      };
+
+      second_chart = {
+        labels: chartHomeVal.data[1].label,
+        datasets: [
+          {
+            label: chartHomeVal.data[1].featureName,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: chartHomeVal.data[1].data,
+          },
+        ],
+      };
+    }
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardBody>
-                <Row>
+                <Row >
                   <Col xs="5" sm="5" style={{ display: 'flex' }}>
                     <Jumbotron style={{ marginBottom: '0px', paddingTop: '50px', paddingBottom: "50px" }}>
                       <h1 style={{ fontSize: '70px' }}>Music trend</h1>
@@ -146,19 +250,14 @@ class Home extends Component {
                   <Col xs="7" sm="7" style={{ display: 'flex' }}>
                     <Card style={{ width: '100%', marginBottom: '0px', }}>
                       <CardBody>
-                        <Carousel autoPlay showStatus={false} infiniteLoop={true} width={'100%'}  >
-                          {homeTrack_1.map((e, i) => {
-                            return <div key={e}>
+                        <Carousel autoPlay={true} showStatus={false} infiniteLoop={true} width={'100%'}  >
+                          {comingHitTrack.map((e, i) => {
+                            return <div onClick={() => {
+                              this.handleClickTrack(e.id);
+                            }} key={e}>
                               <img style={{ maxHeight: "400px" }} src={e.track_imageurl} />
-                              <p className="legend"><p style={{fontSize:'30px'}}>{e.title}</p>
-                                {e.artist}</p>
-                            </div>
-                          })}
-                          {homeTrack_2.map((e, i) => {
-                            return <div key={e}>
-                              <img style={{ maxHeight: "400px" }} src={e.track_imageurl} />
-                              <p className="legend"><p style={{fontSize:'30px'}}>{e.title}</p>
-                                {e.artist}</p>
+                              <div className="legend"><p style={{ fontSize: '30px' }}>{e.title}</p>
+                                {e.artist}</div>
                             </div>
                           })}
                         </Carousel>
@@ -170,13 +269,13 @@ class Home extends Component {
             </Card>
           </Col>
         </Row>
-        <Row>
+        <Row >
           <Col className='list-audio' xs="12" sm="12">
             <Card style={{ width: '100%' }}>
               <CardBody>
-                <Row>
+                <Row style={{ margin: '10px 10px 0 10px' }}>
                   {homeTrack_1.map((e, i) => {
-                    return <Col key={e.id} xs="3" sm="3" className='audio-item'>
+                    return <Col style={{ width: '50%' }} key={e.id} xs="3" sm="3" className='audio-item'>
                       <Card style={{ width: '100%' }} onClick={() => {
                         this.handleClickTrack(e.id);
                       }} >
@@ -251,11 +350,42 @@ class Home extends Component {
         <Row>
           <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
+              <CardHeader>
+              {chartHomeVal ? chartHomeVal.genreName : '' }
+                </CardHeader>
               <CardBody>
-                <Col xs="12" xl="12">
-
-                </Col>
-
+                <Row>
+                  <Col xs="6" sm="6" style={{ margin: '10px auto', display: 'flex' }}>
+                    <Card style={{ width: '100%' }}>
+                      <CardHeader id="valence">
+                        Valence
+                </CardHeader>
+                      <CardBody>
+                        <div className="chart-wrapper">
+                          {chartHomeVal
+                            ? <Line data={first_chart} options={options} />
+                            : ''
+                          }
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col xs="6" sm="6" style={{ margin: '10px auto', display: 'flex' }}>
+                    <Card style={{ width: '100%' }}>
+                      <CardHeader id="valence">
+                        Valence
+                </CardHeader>
+                      <CardBody>
+                        <div className="chart-wrapper">
+                          {chartHomeVal
+                            ? <Line data={second_chart} options={options} />
+                            : ''
+                          }
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
               </CardBody>
             </Card>
           </Col>
