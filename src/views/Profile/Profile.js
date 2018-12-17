@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
-import artistimg from '../../assets/img/brand/avatar.jpg';
+import artistimg from '../../assets/img/brand/default_avatar.png';
 import axios from 'axios';
 const _url = 'http://localhost:10010';
 //========================//=====================
@@ -11,6 +11,7 @@ class Profile extends Component {
   componentDidMount(){
     var user = localStorage.getItem("username");
     var token = localStorage.getItem("token");
+    var fullname = localStorage.getItem("fullname");
     var self = this;
     if (!user || !token) {
       this.props.history.push('/404');
@@ -51,10 +52,10 @@ class Profile extends Component {
         <Row style={{ marginTop: '20px' }} >
           <Col xs="12" sm="12" >
             <div style={{ position: 'relative', display: 'block' }}>
-              <div style={{position: 'absolute', height:'100%', margin:'30px'}}>
+              <div style={{position: 'absolute', height:'100%', margin:'30px', textAlign: 'center'}}>
                 <img className='img-thumbnail img-avatar' src={artistimg}
                  style={{ height: '75%' }} />
-                <p style={{ marginLeft: '30px', color: 'white', fontSize: '25px' }}>Huỳnh Duy Anh Toàn</p>
+                <p style={{ marginLeft: '30px', color: 'white', fontSize: '25px' }}>{localStorage.getItem("fullname")}</p>
               </div>
               <img style={{ width: '100%', height: '370px' }} src={coverImg} alt="Music" />
             </div>

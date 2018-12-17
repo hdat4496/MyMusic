@@ -26,10 +26,11 @@ class Login extends Component {
       }
     }).then(function (res) {
       if (res.data.status === 200) {
-        const { username, token } = res.data;
+        const { username, token, fullname } = res.data;
         localStorage.setItem("username", username);
         localStorage.setItem("token", token);
-        var obj = { username, token };
+        localStorage.setItem("fullname", fullname);
+        var obj = { username, token, fullname };
         self.props.login(obj);
         self.props.history.push(URL.HOME);
       }
@@ -87,8 +88,7 @@ class Login extends Component {
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
+                      <p>If you do not have an account, please register here</p>
                       <Button onClick={() => {
                         this.props.history.push(URL.REGISTER);
                       }} color="primary" className="mt-3" active>Register Now!</Button>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem, Progress, Badge, Col, Row } from 'reactstrap';
-import artistimg from '../../assets/img/brand/avatar.jpg';
+
 import axios from 'axios';
 const _url = 'http://localhost:10010';
 //========================//=====================

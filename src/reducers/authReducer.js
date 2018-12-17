@@ -2,7 +2,8 @@ import { Action } from "../helpers/constants";
 
 const initialState = {
     username: '',
-    token: ''
+    token: '',
+    fullname: ''
 }
 
 const auth = (state = initialState, action) => {

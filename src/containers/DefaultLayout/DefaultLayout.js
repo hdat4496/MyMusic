@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import avatar from '../../assets/img/brand/avatar.jpg'
+import avatar from '../../assets/img/brand/default_avatar.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import logoicon from '../../assets/img/brand/logo_icon.png'
 import {
@@ -34,10 +34,12 @@ class DefaultLayout extends Component {
       // const getAuth = $.getAuthentication();
       var user = localStorage.getItem("username");
       var token = localStorage.getItem("token");
+      var fullname = localStorage.getItem("fullname");
       if (user && token) {
         this.props.login({
           user: user,
-          token: token
+          token: token,
+          fullname: fullname
         });
       }
     }
@@ -95,7 +97,6 @@ class DefaultLayout extends Component {
                   <DropdownItem onClick={() => {
                     this.props.history.push('/profile');
                   }} ><i className="fa fa-user"></i> Profile</DropdownItem>
-                  <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
                   <DropdownItem onClick={this.handleLogout}><i className="fa fa-lock"></i> Logout</DropdownItem>
                 </DropdownMenu>
               </AppHeaderDropdown>

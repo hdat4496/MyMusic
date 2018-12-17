@@ -135,7 +135,7 @@ class SearchLayout extends Component {
     return (
       <div className="animated fadeIn" style={{ marginTop: '20px', marginLeft: '50px', marginRight: '50px' }}>
         <Alert color="primary">
-          This is a primary alert with <a onClick={this.handleCallApi} href="#" className="alert-link">an example link</a>. Give it a click if you like.
+        If there are no results you want to search, please click <a onClick={this.handleCallApi} href="#" className="alert-link">search more</a>.
                 </Alert>
         <Nav tabs>
           <NavItem>

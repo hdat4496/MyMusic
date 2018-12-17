@@ -27,10 +27,11 @@ class Register extends Component {
       }).then(function (res) {
         if (res.data.status === 200) {
           const { username, token } = res.data;
-          var obj = { username, token };
+          var obj = { username, token, fullname };
           self.props.login(obj);
           localStorage.setItem("username", username);
           localStorage.setItem("token", token);
+          localStorage.setItem("fullname", fullname);
           self.props.history.push(URL.HOME);
         }
         else {
