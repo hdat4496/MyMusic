@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import avatar from '../../assets/img/brand/default_avatar.png'
-import sygnet from '../../assets/img/brand/sygnet.svg'
-import logoicon from '../../assets/img/brand/logo_icon.png'
+import ADMIN from '../../helpers/useradmin'
+import avatar from '../../assets/img/brand/default_avatar.png';
+import sygnet from '../../assets/img/brand/sygnet.svg';
+import logoicon from '../../assets/img/brand/logo_icon.png';
 import {
   AppAside,
   AppFooter,
@@ -45,13 +46,13 @@ class DefaultLayout extends Component {
     }
   }
 
-  handleSearch= ()=>{
+  handleSearch = () => {
     const keyword = this.keyword.value;
     const urlCurrent = window.location.href;
-    if(keyword!==''){
+    if (keyword !== '') {
       this.props.history.push(`/search?keyword=${keyword}`);
     }
-    if (urlCurrent.includes('search')){
+    if (urlCurrent.includes('search')) {
       window.location.reload();
     }
   }
@@ -60,7 +61,7 @@ class DefaultLayout extends Component {
     if (event.key === 'Enter') {
       this.handleSearch();
     }
-};
+  };
   render() {
     const { auth } = this.props;
     return (
@@ -80,12 +81,12 @@ class DefaultLayout extends Component {
               </NavItem>
             </Nav>
 
-              <InputGroup style={{ margin: 'auto', width: '60%' }}>
-                <InputGroupAddon addonType="prepend">
-                  <Button  onClick={this.handleSearch} type="button" color="primary"><i className="fa fa-search"></i> Search</Button>
-                </InputGroupAddon>
-                <Input onKeyPress={this.handleKeyPress} innerRef={(node) => this.keyword = node} type="text" id="input1-group2" name="input1-group2" placeholder="Please input song name or artist" />
-              </InputGroup>
+            <InputGroup style={{ margin: 'auto', width: '60%' }}>
+              <InputGroupAddon addonType="prepend">
+                <Button onClick={this.handleSearch} type="button" color="primary"><i className="fa fa-search"></i> Search</Button>
+              </InputGroupAddon>
+              <Input onKeyPress={this.handleKeyPress} innerRef={(node) => this.keyword = node} type="text" id="input1-group2" name="input1-group2" placeholder="Please input song name or artist" />
+            </InputGroup>
 
             {this.props.auth.token.length > 0 ? <Nav className="ml-auto" navbar>
               <AppHeaderDropdown direction="down">
@@ -97,6 +98,10 @@ class DefaultLayout extends Component {
                   <DropdownItem onClick={() => {
                     this.props.history.push('/profile');
                   }} ><i className="fa fa-user"></i> Profile</DropdownItem>
+                  {ADMIN.includes(localStorage.getItem("username"))? <DropdownItem onClick={() => {
+                    this.props.history.push('/management');
+                  }} ><i className="fa fa-cog"></i> Management</DropdownItem> : ''}
+
                   <DropdownItem onClick={this.handleLogout}><i className="fa fa-lock"></i> Logout</DropdownItem>
                 </DropdownMenu>
               </AppHeaderDropdown>

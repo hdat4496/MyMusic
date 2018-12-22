@@ -17,6 +17,11 @@ const Profile = Loadable({
   loading: Loading,
 });
 
+const Management = Loadable({
+  loader: () => import('./views/Management'),
+  loading: Loading,
+});
+
 const Artist = Loadable({
   loader: () => import('./views/Artist'),
   loading: Loading,
@@ -59,6 +64,7 @@ const routes = [
   { path: URL.TRACK, name: 'track', component: Track },
   { path: URL.CHART, name: 'chart', component: Chart },
   { path: URL.PROFILE, name: 'profile', component: Profile },
+  { path: URL.MANAGEMENT, name: 'management', component: Management },
   { path: URL.ARTIST, name: 'artist', component: Artist },
   // { path: '/home', name: 'home', component: Home },
   { path: URL.SEARCH, name: 'SearchLayout', component: SearchLayout },

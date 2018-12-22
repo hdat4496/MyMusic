@@ -2,6 +2,7 @@ import { ButtonDropdowns, ButtonGroups, Buttons, BrandButtons } from './Buttons'
 import Charts from './Charts';
 import Track from './Track';
 import Profile from './Profile';
+import Management from './Management';
 import Chart from './Chart';
 import Home from './Home';
 import Artist from './Artist';
@@ -11,6 +12,8 @@ import { Login, Page404, Page500, Register, PageMain } from './Pages';
 import Widgets from './Widgets';
 
 export {
+  Profile,
+  Management,
   Artist,
   Track,
   Chart,

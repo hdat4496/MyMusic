@@ -165,7 +165,7 @@ class Track extends Component {
       }
     }).then(function (res) {
       if (res.data.status === 200) {
-        var likeNumber = self.state.likeNumber
+        var likeNumber = parseInt(self.state.likeNumber);
         if (self.state.userFavorite) {
           likeNumber -= 1;
         } else {
