@@ -200,18 +200,18 @@ class Home extends Component {
             label: chartHomeVal.data[1].featureName,
             fill: false,
             lineTension: 0.1,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
+            backgroundColor: '#f86c6b',
+            borderColor: '#f86c6b',
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBorderColor: '#f86c6b',
             pointBackgroundColor: '#fff',
             pointBorderWidth: 1,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBackgroundColor: '#f86c6b',
+            pointHoverBorderColor: '#f86c6b',
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
@@ -351,14 +351,14 @@ class Home extends Component {
           <Col xs="12" sm="12" style={{ margin: '10px auto', display: 'flex' }}>
             <Card style={{ width: '100%' }}>
               <CardHeader>
-              {chartHomeVal ? chartHomeVal.genreName : '' }
-                </CardHeader>
+                {chartHomeVal ? chartHomeVal.genreName : ''}
+              </CardHeader>
               <CardBody>
                 <Row>
                   <Col xs="6" sm="6" style={{ margin: '10px auto', display: 'flex' }}>
                     <Card style={{ width: '100%' }}>
-                      <CardHeader id="valence">
-                        Valence
+                      <CardHeader>
+                        {chartHomeVal ? chartHomeVal.data[0].featureName: ''}
                 </CardHeader>
                       <CardBody>
                         <div className="chart-wrapper">
@@ -372,8 +372,8 @@ class Home extends Component {
                   </Col>
                   <Col xs="6" sm="6" style={{ margin: '10px auto', display: 'flex' }}>
                     <Card style={{ width: '100%' }}>
-                      <CardHeader id="valence">
-                        Valence
+                      <CardHeader>
+                        {chartHomeVal ? chartHomeVal.data[1].featureName: ''}
                 </CardHeader>
                       <CardBody>
                         <div className="chart-wrapper">
