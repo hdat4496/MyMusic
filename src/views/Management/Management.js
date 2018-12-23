@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Nav, NavItem, NavLink, TabContent, TabPane, Button, Table, Input, Form, InputGroup, InputGroupAddon, } from 'reactstrap';
+import {
+  Card, CardBody, CardHeader, Col, Row, Nav, NavItem, NavLink, TabContent, TabPane,
+  Button, Table, Input, Form, InputGroup, InputGroupAddon, Modal, ModalHeader, ModalBody, ModalFooter
+} from 'reactstrap';
 import axios from 'axios';
 import classnames from 'classnames';
 import dateFormat from 'dateformat';
@@ -12,7 +15,9 @@ class Management extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.loadding = this.loadding.bind(this);
     this.state = {
+      loadding: false,
       activeTab: '1',
       enable: true,
       dataTrack: [],
@@ -31,6 +36,8 @@ class Management extends Component {
       });
     }
   }
+
+
   componentDidMount = async () => {
     var user = localStorage.getItem("username");
     var token = localStorage.getItem("token");
@@ -199,6 +206,10 @@ class Management extends Component {
     }
     console.log(startDate, endDate);
 
+    self.setState({
+      ...self.state,
+      loadding: true
+    });
 
     axios.get(_url + '/crawl', {
       params: {
@@ -211,9 +222,14 @@ class Management extends Component {
         console.log(res.data);
         self.setState({
           ...self.state,
-          dataChart: res.data.value
+          dataChart: res.data.value,
+          loadding: false
         });
       } else {
+        self.setState({
+          ...self.state,
+          loadding: false
+        });
         var options_noti = {
           place: 'br',
           message: res.data.value,
@@ -335,11 +351,26 @@ class Management extends Component {
     }
   }
 
+
+  loadding() {
+    this.setState({
+      ...this.state,
+      loadding: !this.state.loadding,
+    });
+  }
+
+
   render() {
     const { dataTrack, dataNewTrack, dataChart, dataTracks, genreCurrent, dateCurrent, trackDetail } = this.state;
     return (
       <div className="animated fadeIn">
-      <NotificationAlert ref="notificationAlert" />
+        <NotificationAlert ref="notificationAlert" />
+        <Modal isOpen={this.state.loadding} toggle={this.loadding}
+          className={'modal-info ' + this.props.className}>
+          <ModalBody>
+            Data is being crawl, please wait a moment...
+                  </ModalBody>
+        </Modal>
         <Row style={{ marginTop: '20px' }} >
           <Col xs="12" sm="12" >
             <Nav tabs>
@@ -408,12 +439,12 @@ class Management extends Component {
                   {Object.keys(trackDetail).length !== 0 ? <Col col="6" sm="6" md="6" >
                     <Card style={{ margin: '20px' }}>
                       <Row style={{ margin: '20px' }}>
-                        <Col style={{ margin: 'auto'}} col="6" sm="3" md="6">
-                          <img style={{maxHeight: '250px', maxWidth: '250px' }} src={trackDetail.trackInfo.track_imageurl}></img>
+                        <Col style={{ margin: 'auto' }} col="6" sm="3" md="6">
+                          <img style={{ maxHeight: '250px', maxWidth: '250px' }} src={trackDetail.trackInfo.track_imageurl}></img>
                         </Col>
                         <Col style={{ margin: 'auto' }} col="6" sm="3" md="6">
-                        <div className='track-detail' >
-                          <b>Id:</b> {trackDetail.trackInfo.id}
+                          <div className='track-detail' >
+                            <b>Id:</b> {trackDetail.trackInfo.id}
                           </div>
                         </Col>
                       </Row>
@@ -448,96 +479,96 @@ class Management extends Component {
                         <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b>Track preview url:</b> <a target="_blank" href={trackDetail.trackInfo.track_preview_url}>{trackDetail.trackInfo.track_preview_url != 'null' ? 'Track preview' : ''}</a>
-                            </div> 
+                          </div>
                         </Col>
-                          <Col col="6" sm="3" md="6">
-                            <div className='track-detail' >
-                              <b>Artist image url:</b> <a target="_blank" href={trackDetail.trackInfo.artist_imageurl}>Artist image</a>
-                            </div>
-                          </Col>
+                        <Col col="6" sm="3" md="6">
+                          <div className='track-detail' >
+                            <b>Artist image url:</b> <a target="_blank" href={trackDetail.trackInfo.artist_imageurl}>Artist image</a>
+                          </div>
+                        </Col>
                       </Row>
 
-                        <Row style={{ margin: '20px' }}>
-                          <Col col="6" sm="3" md="6">
-                            <div className='track-detail' >
-                              <b>Duration ms:</b> {trackDetail.trackFeatures.duration_ms}
-                            </div>
-                          </Col>
-                          <Col col="6" sm="3" md="6">
-                            <div className='track-detail' >
-                              <b>Tempo:</b> {trackDetail.trackFeatures.tempo}
-                            </div>
-                          </Col>
-                        </Row>
+                      <Row style={{ margin: '20px' }}>
+                        <Col col="6" sm="3" md="6">
+                          <div className='track-detail' >
+                            <b>Duration ms:</b> {trackDetail.trackFeatures.duration_ms}
+                          </div>
+                        </Col>
+                        <Col col="6" sm="3" md="6">
+                          <div className='track-detail' >
+                            <b>Tempo:</b> {trackDetail.trackFeatures.tempo}
+                          </div>
+                        </Col>
+                      </Row>
 
-                        <Row style={{ margin: '20px' }}>
-                          <Col col="6" sm="3" md="6">
-                            <div className='track-detail' >
-                              <b>Key:</b> {trackDetail.trackFeatures.key}
-                            </div>
-                          </Col>
-                          <Col col="6" sm="3" md="6">
-                            <div className='track-detail' >
-                              <b> Mode:</b> {trackDetail.trackFeatures.mode}
-                            </div>
-                          </Col>
-                        </Row>
+                      <Row style={{ margin: '20px' }}>
+                        <Col col="6" sm="3" md="6">
+                          <div className='track-detail' >
+                            <b>Key:</b> {trackDetail.trackFeatures.key}
+                          </div>
+                        </Col>
+                        <Col col="6" sm="3" md="6">
+                          <div className='track-detail' >
+                            <b> Mode:</b> {trackDetail.trackFeatures.mode}
+                          </div>
+                        </Col>
+                      </Row>
 
-                        <Row style={{ margin: '20px' }}>
-                          <Col col="6" sm="3" md="6">
+                      <Row style={{ margin: '20px' }}>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b>Loudless:</b> {trackDetail.trackFeatures.loudness}
                           </div>
-                          </Col>
-                          <Col col="6" sm="3" md="6">
+                        </Col>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b> Time signature:</b> {trackDetail.trackFeatures.time_signature}
                           </div>
-                          </Col>
-                        </Row>
+                        </Col>
+                      </Row>
 
-                        <Row style={{ margin: '20px' }}>
-                          <Col col="6" sm="3" md="6">
+                      <Row style={{ margin: '20px' }}>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b> Danceability:</b> {trackDetail.trackFeatures.danceability}
                           </div>
-                          </Col>
-                          <Col col="6" sm="3" md="6">
+                        </Col>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b> Accousticness:</b> {trackDetail.trackFeatures.acousticness}
                           </div>
-                          </Col>
-                        </Row>
+                        </Col>
+                      </Row>
 
-                        <Row style={{ margin: '20px' }}>
-                          <Col col="6" sm="3" md="6">
+                      <Row style={{ margin: '20px' }}>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b>Speechiness:</b> {trackDetail.trackFeatures.speechiness}
                           </div>
-                          </Col>
-                          <Col col="6" sm="3" md="6">
+                        </Col>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b>Instrumentalness:</b> {trackDetail.trackFeatures.instrumentalness}
                           </div>
-                          </Col>
-                        </Row>
+                        </Col>
+                      </Row>
 
-                        <Row style={{ margin: '20px' }}>
-                          <Col col="6" sm="3" md="6">
+                      <Row style={{ margin: '20px' }}>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b>Valence:</b> {trackDetail.trackFeatures.valence}
                           </div>
-                          </Col>
-                          <Col col="6" sm="3" md="6">
+                        </Col>
+                        <Col col="6" sm="3" md="6">
                           <div className='track-detail' >
                             <b>Energy:</b> {trackDetail.trackFeatures.energy}
                           </div>
-                          </Col>
-                        </Row>
+                        </Col>
+                      </Row>
 
                     </Card>
                   </Col> : ''}
-                    
+
                 </Row>
 
 
@@ -560,147 +591,147 @@ class Management extends Component {
 
               </TabPane>
               <TabPane style={{ minHeight: "calc(100vh - 190px)" }} tabId="2">
-                    <Row style={{ margin: '20px 0 10px 10px' }}>
-                      <Col col="6" sm="4" md="2" className="mb-3 mb-xl-0">
-                        <Button onClick={this.getNewHitTrack} block color="success">Get new hit tracks</Button>
-                      </Col>
-                    </Row>
-                    <Table style={{ margin: '30px 20px 20px 20px', width: '95%' }} responsive>
-                      <thead>
-                        <tr style={{ backgroundColor: '#c8ced3' }}>
-                          <th style={{ width: '5%' }}>#</th>
-                          <th>Title</th>
-                          <th>Artist</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataNewTrack.map((e, i) => {
-                          return <tr key={e.id}>
-                            <td>{i + 1}</td>
-                            <td>{e.title}</td>
-                            <td>{e.artist}</td>
-                          </tr>;
-                        })}
+                <Row style={{ margin: '20px 0 10px 10px' }}>
+                  <Col col="6" sm="4" md="2" className="mb-3 mb-xl-0">
+                    <Button onClick={this.getNewHitTrack} block color="success">Get new hit tracks</Button>
+                  </Col>
+                </Row>
+                <Table style={{ margin: '30px 20px 20px 20px', width: '95%' }} responsive>
+                  <thead>
+                    <tr style={{ backgroundColor: '#c8ced3' }}>
+                      <th style={{ width: '5%' }}>#</th>
+                      <th>Title</th>
+                      <th>Artist</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataNewTrack.map((e, i) => {
+                      return <tr key={e.id}>
+                        <td>{i + 1}</td>
+                        <td>{e.title}</td>
+                        <td>{e.artist}</td>
+                      </tr>;
+                    })}
 
-                      </tbody>
-                    </Table>
-                  </TabPane>
-                  <TabPane style={{ minHeight: "calc(100vh - 190px)" }} tabId="3">
-                    <Form onSubmit={this.handleCrawl}>
-                      <Row style={{ margin: '20px 0 10px 10px' }}>
-                        <Col col="3" sm="3" md="2" className="mb-3 mb-xl-0">
-                          <Input innerRef={(node) => this.genre = node} type="select" name="genre" id="genre">
-                            <option value="4">All</option>
-                            <option value="1">Dance</option>
-                            <option value="2">Rock</option>
-                            <option value="3">R&B</option>
-                          </Input>
+                  </tbody>
+                </Table>
+              </TabPane>
+              <TabPane style={{ minHeight: "calc(100vh - 190px)" }} tabId="3">
+                <Form onSubmit={this.handleCrawl}>
+                  <Row style={{ margin: '20px 0 10px 10px' }}>
+                    <Col col="3" sm="3" md="2" className="mb-3 mb-xl-0">
+                      <Input innerRef={(node) => this.genre = node} type="select" name="genre" id="genre">
+                        <option value="4">All</option>
+                        <option value="1">Dance</option>
+                        <option value="2">Rock</option>
+                        <option value="3">R&B</option>
+                      </Input>
+                    </Col>
+                    <Col col="3" sm="3" md="2" className="mb-3 mb-xl-0">
+                      <Input onChange={this.onChangeTime} innerRef={(node) => this.time = node} type="select" name="time" id="time">
+                        <option value="thisweek">This week</option>
+                        <option value="previous">Previous week</option>
+                        <option value="customtime">Custom time</option>
+                      </Input>
+                    </Col>
+                    <Col col="2" sm="4" md="2" className="mb-3 mb-xl-0">
+                      <Input required disabled={this.state.enable} innerRef={(node) => this.startDate = node} type="date" id="date-start" name="date-start" placeholder="Start date" />
+                    </Col>
+                    <Col col="2" sm="4" md="2" className="mb-3 mb-xl-0">
+                      <Input required disabled={this.state.enable} innerRef={(node) => this.endDate = node} type="date" id="date-end" name="date-end" placeholder="End date" />
+                    </Col>
+                    <Col col="2" sm="3" md="1" className="mb-3 mb-xl-0">
+                      <Button block color="success">Crawl data</Button>
+                    </Col>
+                  </Row>
+                </Form>
+                <Row>
+                  <Col col="6" sm="6" md="6" >
+                    <Card style={{ margin: '20px 0 20px 20px' }}>
+                      <Form onSubmit={this.handleSearch}>
+                        <Row style={{ margin: '20px 0 10px 10px' }}>
+                          <Col col="4" sm="3" md="2" className="mb-3 mb-xl-0">
+                            <Input innerRef={(node) => this.genre2 = node} type="select" name="genre" id="genre">
+                              <option value="-1">Genre</option>
+                              <option value="4">All</option>
+                              <option value="1">Dance</option>
+                              <option value="2">Rock</option>
+                              <option value="3">R&B</option>
+                            </Input>
+                          </Col>
+                          <Col col="3" sm="3" md="3" className="mb-3 mb-xl-0">
+                            <Input innerRef={(node) => this.startDate2 = node} type="date" id="date-start" name="date-start" placeholder="Start date" />
+                          </Col>
+                          <Col col="3" sm="3" md="3" className="mb-3 mb-xl-0">
+                            <Input innerRef={(node) => this.endDate2 = node} type="date" id="date-end" name="date-end" placeholder="End date" />
+                          </Col>
+                          <Col col="2" sm="3" md="2" className="mb-3 mb-xl-0">
+                            <Button block color="success">Search</Button>
+                          </Col>
+                        </Row>
+                      </Form>
+
+
+                      <Table hover style={{ margin: '20px', width: '90%' }} responsive>
+                        <thead>
+                          <tr style={{ backgroundColor: '#c8ced3' }}>
+                            <th style={{ width: '10%' }}>#</th>
+                            <th>Genre</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dataChart.map((e, i) => {
+                            return <tr key={i} onClick={() => { this.getTracks(e.genre, e.date) }}>
+                              <td>{i + 1}</td>
+                              <td>{e.genre}</td>
+                              <td>{e.date}</td>
+                            </tr>
+                          })}
+                        </tbody>
+                      </Table>
+                    </Card>
+                  </Col>
+                  <Col col="6" sm="6" md="6" >
+                    <Card style={{ margin: '20px' }}>
+                      <Row style={{ margin: '40px 20px 0 20px' }}>
+                        <Col col="5" sm="3" md="4" className="mb-3 mb-xl-0">
+                          Genre: {genreCurrent}
                         </Col>
-                        <Col col="3" sm="3" md="2" className="mb-3 mb-xl-0">
-                          <Input onChange={this.onChangeTime} innerRef={(node) => this.time = node} type="select" name="time" id="time">
-                            <option value="thisweek">This week</option>
-                            <option value="previous">Previous week</option>
-                            <option value="customtime">Custom time</option>
-                          </Input>
-                        </Col>
-                        <Col col="2" sm="4" md="2" className="mb-3 mb-xl-0">
-                          <Input required disabled={this.state.enable} innerRef={(node) => this.startDate = node} type="date" id="date-start" name="date-start" placeholder="Start date" />
-                        </Col>
-                        <Col col="2" sm="4" md="2" className="mb-3 mb-xl-0">
-                          <Input required disabled={this.state.enable} innerRef={(node) => this.endDate = node} type="date" id="date-end" name="date-end" placeholder="End date" />
-                        </Col>
-                        <Col col="2" sm="3" md="1" className="mb-3 mb-xl-0">
-                          <Button block color="success">Crawl data</Button>
+                        <Col col="5" sm="3" md="5" className="mb-3 mb-xl-0">
+                          Date: {dateCurrent}
                         </Col>
                       </Row>
-                    </Form>
-                    <Row>
-                      <Col col="6" sm="6" md="6" >
-                        <Card style={{ margin: '20px 0 20px 20px' }}>
-                          <Form onSubmit={this.handleSearch}>
-                            <Row style={{ margin: '20px 0 10px 10px' }}>
-                              <Col col="4" sm="3" md="2" className="mb-3 mb-xl-0">
-                                <Input innerRef={(node) => this.genre2 = node} type="select" name="genre" id="genre">
-                                  <option value="-1">Genre</option>
-                                  <option value="4">All</option>
-                                  <option value="1">Dance</option>
-                                  <option value="2">Rock</option>
-                                  <option value="3">R&B</option>
-                                </Input>
-                              </Col>
-                              <Col col="3" sm="3" md="3" className="mb-3 mb-xl-0">
-                                <Input innerRef={(node) => this.startDate2 = node} type="date" id="date-start" name="date-start" placeholder="Start date" />
-                              </Col>
-                              <Col col="3" sm="3" md="3" className="mb-3 mb-xl-0">
-                                <Input innerRef={(node) => this.endDate2 = node} type="date" id="date-end" name="date-end" placeholder="End date" />
-                              </Col>
-                              <Col col="2" sm="3" md="2" className="mb-3 mb-xl-0">
-                                <Button block color="success">Search</Button>
-                              </Col>
-                            </Row>
-                          </Form>
+                      <Table style={{ margin: '20px', width: '95%' }} responsive>
+                        <thead>
+                          <tr style={{ backgroundColor: '#c8ced3' }}>
+                            <th style={{ width: '10%' }}>Position</th>
+                            <th>Title</th>
+                            <th>Artist</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dataTracks.map((e, i) => {
+                            return <tr key={i}>
+                              <td>{e.position}</td>
+                              <td>{e.title}</td>
+                              <td>{e.artist}</td>
+                            </tr>
+                          })}
+                        </tbody>
+                      </Table>
+                    </Card>
+                  </Col>
+                </Row>
 
-
-                          <Table hover style={{ margin: '20px', width: '90%' }} responsive>
-                            <thead>
-                              <tr style={{ backgroundColor: '#c8ced3' }}>
-                                <th style={{ width: '10%' }}>#</th>
-                                <th>Genre</th>
-                                <th>Date</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {dataChart.map((e, i) => {
-                                return <tr key={i} onClick={() => { this.getTracks(e.genre, e.date) }}>
-                                  <td>{i + 1}</td>
-                                  <td>{e.genre}</td>
-                                  <td>{e.date}</td>
-                                </tr>
-                              })}
-                            </tbody>
-                          </Table>
-                        </Card>
-                      </Col>
-                      <Col col="6" sm="6" md="6" >
-                        <Card style={{ margin: '20px' }}>
-                          <Row style={{ margin: '40px 20px 0 20px' }}>
-                            <Col col="5" sm="3" md="4" className="mb-3 mb-xl-0">
-                              Genre: {genreCurrent}
-                            </Col>
-                            <Col col="5" sm="3" md="5" className="mb-3 mb-xl-0">
-                              Date: {dateCurrent}
-                            </Col>
-                          </Row>
-                          <Table style={{ margin: '20px', width: '95%' }} responsive>
-                            <thead>
-                              <tr style={{ backgroundColor: '#c8ced3' }}>
-                                <th style={{ width: '10%' }}>Position</th>
-                                <th>Title</th>
-                                <th>Artist</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {dataTracks.map((e, i) => {
-                                return <tr key={i}>
-                                  <td>{e.position}</td>
-                                  <td>{e.title}</td>
-                                  <td>{e.artist}</td>
-                                </tr>
-                              })}
-                            </tbody>
-                          </Table>
-                        </Card>
-                      </Col>
-                    </Row>
-
-                  </TabPane>
+              </TabPane>
             </TabContent>
           </Col>
         </Row>
 
       </div>
-          );
-        }
-      }
-      
-      export default Management;
+    );
+  }
+}
+
+export default Management;
