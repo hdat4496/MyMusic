@@ -4,7 +4,7 @@ import axios from 'axios';
 import classnames from 'classnames';
 import dateFormat from 'dateformat';
 import ADMIN from '../../helpers/useradmin'
-
+import NotificationAlert from 'react-notification-alert';
 const _url = 'http://localhost:10010';
 //========================//=====================
 class Management extends Component {
@@ -214,7 +214,14 @@ class Management extends Component {
           dataChart: res.data.value
         });
       } else {
-        console.log(res.data.message);
+        var options_noti = {
+          place: 'br',
+          message: res.data.value,
+          type: 'danger',
+          autoDismiss: 3,
+        }
+        self.refs.notificationAlert.notificationAlert(options_noti);
+        console.log(res.data);
       }
 
     })
@@ -253,7 +260,13 @@ class Management extends Component {
             dataChart: res.data.value
           });
         } else {
-          console.log(res.data.message);
+          var options_noti = {
+            place: 'br',
+            message: res.data.value,
+            type: 'danger',
+            autoDismiss: 3,
+          }
+          self.refs.notificationAlert.notificationAlert(options_noti);
         }
 
       })
@@ -326,6 +339,7 @@ class Management extends Component {
     const { dataTrack, dataNewTrack, dataChart, dataTracks, genreCurrent, dateCurrent, trackDetail } = this.state;
     return (
       <div className="animated fadeIn">
+      <NotificationAlert ref="notificationAlert" />
         <Row style={{ marginTop: '20px' }} >
           <Col xs="12" sm="12" >
             <Nav tabs>
@@ -356,18 +370,6 @@ class Management extends Component {
             </Nav>
             <TabContent activeTab={this.state.activeTab}>
               <TabPane style={{ minHeight: "calc(100vh - 190px)" }} tabId="1">
-
-
-
-
-
-
-
-
-
-
-
-
                 <Row>
                   <Col col="6" sm="6" md="6" >
                     <Card style={{ margin: '20px 0 20px 20px' }}>
