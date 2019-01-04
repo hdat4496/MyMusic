@@ -18,7 +18,10 @@ class SearchLayout extends Component {
     const self = this;
     const urlCurrent = window.location.href.split('=');
     var keyword = urlCurrent[urlCurrent.length - 1];
+    keyword = keyword.split('%20').join(' ').trim();
     var byTrack = [], byArtist = [];
+    console.log(keyword);
+
     if (keyword.includes("#")){
       var lastIndex = keyword.lastIndexOf("#");
       keyword = keyword.substring(0, lastIndex);
@@ -75,7 +78,7 @@ class SearchLayout extends Component {
     const self = this;
     const urlCurrent = window.location.href.split('=');
     var keyword = urlCurrent[urlCurrent.length - 1];
-
+    keyword = keyword.split('%20').join(' ').trim();
     if (keyword.includes("#")){
     var lastIndex = keyword.lastIndexOf("#");
     keyword = keyword.substring(0, lastIndex);

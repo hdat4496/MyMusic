@@ -136,7 +136,7 @@ class Track extends Component {
           }
 
         } else {
-          self.props.history.push('/404')
+          self.props.history.push('/500')
         }
 
       })
