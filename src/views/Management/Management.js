@@ -18,6 +18,7 @@ class Management extends Component {
     this.loadding = this.loadding.bind(this);
     this.state = {
       loadding: false,
+      loaddingNewTrack: false,
       activeTab: '1',
       enable: true,
       dataTrack: [],
@@ -129,7 +130,11 @@ class Management extends Component {
 
   getNewHitTrack = () => {
     var self = this;
-    axios.get(_url + '/track/get-coming-hit-track', {
+    self.setState({
+      ...self.state,
+      loaddingNewTrack: true
+    });
+    axios.get(_url + '/track/fetch-new-released-track', {
       params: {
         key: ''
       }
@@ -138,7 +143,8 @@ class Management extends Component {
         console.log(res.data);
         self.setState({
           ...self.state,
-          dataNewTrack: res.data.value
+          dataNewTrack: res.data.value,
+          loaddingNewTrack: false
         });
       } else {
         console.log(res.data.message);
@@ -359,6 +365,13 @@ class Management extends Component {
     });
   }
 
+  loaddingNewTrack() {
+    this.setState({
+      ...this.state,
+      loaddingNewTrack: !this.state.loaddingNewTrack,
+    });
+  }
+
 
   render() {
     const { dataTrack, dataNewTrack, dataChart, dataTracks, genreCurrent, dateCurrent, trackDetail } = this.state;
@@ -371,6 +384,15 @@ class Management extends Component {
             Data is being crawl, please wait a moment...
                   </ModalBody>
         </Modal>
+
+        <Modal isOpen={this.state.loaddingNewTrack} toggle={this.loaddingNewTrack}
+          className={'modal-info ' + this.props.className}>
+          <ModalBody>
+            New track are getiing, please wait a moment...
+                  </ModalBody>
+        </Modal>
+
+
         <Row style={{ marginTop: '20px' }} >
           <Col xs="12" sm="12" >
             <Nav tabs>
